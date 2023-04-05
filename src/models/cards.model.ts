@@ -2,7 +2,10 @@ import { randomUUID } from "crypto";
 import { db_path } from "../config/db.config";
 import { Card } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
-
+import { csvOptions } from "../config/db.config";
+import fs from "fs";
+import fastCsv from "fast-csv";
+import decksModel from "./decks.model";
 class CardModel {
     file_name: string;
     file_path: string;
