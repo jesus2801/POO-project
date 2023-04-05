@@ -9,5 +9,5 @@ export const csvOptions = {
     delimiter: ";",
     quote: null,
     headers: true,
-    renameHeaders: false,
+    renameHeaders: false
 };
