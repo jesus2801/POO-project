@@ -5,4 +5,6 @@ const router = Router();
 
 router.post("/", sessionsController.createSession);
 
+router.get("/:id", sessionsController.getUserSessions)
+
 export { router };
