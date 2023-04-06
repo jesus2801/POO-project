@@ -7,4 +7,6 @@ router.post("/", sessionsController.createSession);
 
 router.get("/:id", sessionsController.getUserSessions)
 
+router.delete("/:id", sessionsController.deleteSession);
+
 export { router };

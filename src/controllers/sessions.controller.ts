@@ -20,6 +20,16 @@ class SessionsController {
       //error handling
     }
   }
+
+  public async deleteSession(req: Request, res: Response) {
+    try{
+      const { id } = req.params 
+      await sessionsModel.deleteSession(id)
+      return res.status(200).send({error: false})
+    }catch {
+      //error handling
+    }
+  }
 }
 
 export default new SessionsController();
