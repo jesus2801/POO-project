@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { db_path } from "../config/db.config";
 import { Card } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
