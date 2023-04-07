@@ -1,37 +1,44 @@
 import { db_path } from "../config/db.config";
 import { Card } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
-import { csvOptions } from "../config/db.config";
-import fs from "fs";
-import fastCsv from "fast-csv";
-import decksModel from "./decks.model";
+import { v4 } from "uuid";
 class CardModel {
     file_name: string;
     file_path: string;
-
+    headers: string[]
     //create the file if it doesn't exist
     constructor() {
         this.file_name = "cards.csv";
         this.file_path = db_path;
-        fileUtils.createEmptyFile(this.file_name, this.file_path)
-    }
+        this.headers = [
+          "id",
+          "userId",
+          "deckId",
+          "date",
+          "last_review",
+          "front",
+          "back",
+          "fibonacci"
+        ];
+        this.startFile();
+      }
+    
+      //create the file
+      private startFile(overwrite: boolean = false){
+        fileUtils.createEmptyFile(this.file_name, this.file_path, this.headers, overwrite);
+      }
 
     //USE THROW FOR ERROR HANDLING
 
     //this functions returns all cards from a deck id
     //@ts-ignore
-    public async getDeckCards(deckId: number): Promise<Card[]> {
-        await new Promise((resolve, reject) => {
-        const rows: any[] = [];
-        fs.createReadStream('cards.csv')
-          .pipe(fastCsv.parse({ headers: true }))
-          .on('error', (err) => reject(err))
-          .on('data', (row) => rows.push(row))
-          .on('end', () => {
-            const newtab = rows.filter((row) => row["deckid"] === deckId);
-            console.log(newtab);
-          });
-      });
+    public async getDeckCards(deckId: string): Promise<Card[]> {
+      const cards: Card[] = await fileUtils.filter(
+        this.file_path + this.file_name,
+        { deckId},
+        false
+      );
+      return cards; 
 
     }
     
@@ -41,73 +48,62 @@ class CardModel {
     //fibonacci = 0
     //@ts-ignore
     public async createCard(card: Omit<Card, "id" | "last_review" | "fibonacci">): Promise<Card> {
-        let date= new Date
-        const Card=[{
-        id: randomUUID,
-        userid:"h",
-        deckId:"luego mir",
-        last_review:`${date.getDay}/${date.getMonth}/${date.getFullYear}`,
-        front:InputEvent,
-        back:InputEvent,
-        fibonacci:0,
-       }]
-       await new Promise((resolve, reject) => {
-        const ws = fs.createWriteStream('cards.csv', { flags: 'a' });
-        fastCsv.write(Card, { headers: false })
-          .on('error', (err) => reject(err))
-          .pipe(ws)
-          .on('finish', () => resolve('Fila añadida al yugi'));
-      })
+      const date= new Date
+      const newCard: Card = { ...card, id: v4(), last_review:`${date.getDay}//${date.getMonth}/${date.getFullYear}`, fibonacci:0 };
+      //append the new sessions to the csv
+      await fileUtils.append(
+        [newCard],
+        this.file_path + this.file_name,
+        this.headers
+      );
+      return newCard;
+    
 
     }
 
     //this function updates a card and returns it with the new setted values
     //@ts-ignore
-    public async updateCard(card: Omit<Card, "id" | "userId">,id:number): Promise<Card> {
-        let date= new Date
-        await new Promise((resolve, reject) => {
-            const rows: any[] = [];
-            fs.createReadStream('cards.csv')
-              .pipe(fastCsv.parse({ headers: true }))
-              .on('error', (err) => reject(err))
-              .on('data', (row) => rows.push(row))
-              .on('end', () => {
-                const nuevaTabla = rows.map((row) => {
-                  if (row["id"] === id) {
-                    row["last_review"] = `${date.getDay}/${date.getMonth}/${date.getFullYear}`;
-                    row["front"]= InputEvent
-                    row["back"]=InputEvent
-                    row["fibonacci"]=0
-                  }
-                  return row;
-                });
-                const ws = fs.createWriteStream('cards.csv');
-                fastCsv.write(nuevaTabla, { headers: true })
-                  .on('error', (err) => reject(err))
-                  .pipe(ws)
-                  .on('finish', () => resolve('Valor cambiado en el cards CSV'));
-              });
-          });
+    public async updateCard(card: Omit<Card, "id" | "userId">,id:string): Promise<Card> {
+      const cards: Card[] = await fileUtils.filter(
+        this.file_path + this.file_name,
+        { id},
+        false
+        
+      );
+      const newCard: Card = { ...card, id: id,userId:String(cards[1])};
 
+      await fileUtils.update(
+        this.file_path + this.file_name,
+        String({id}),
+        String(id),
+        newCard
+      )
+      return newCard
+      
+      //append the new sessions to the csv
+      
+    
     }
 
     //this function deletes a card
-    public async deleteCard(id: number): Promise<void> {
-       await new Promise((resolve, reject) => {
-            const rows: any[] = [];
-            fs.createReadStream('cards.csv')
-              .pipe(fastCsv.parse({ headers: true }))
-              .on('error', (err) => reject(err))
-              .on('data', (row) => rows.push(row))
-              .on('end', () => {
-                const newtab = rows.filter((row) => row["id"] !== id);
-                const ws = fs.createWriteStream('cards.csv');
-                fastCsv.write(newtab, { headers: true })
-                  .on('error', (err) => reject(err))
-                  .pipe(ws)
-                  .on('finish', () => resolve('Fila eliminada del cards CSV'));
-              });
-          });
+    public async deleteCard(id: String): Promise<void> {
+      const data = await fileUtils.filter(
+        this.file_path + this.file_name,
+        { id },
+        true
+      );
+  
+     
+      if (data.length > 0)
+        
+        await fileUtils.create(
+          this.file_path + this.file_name,
+          data,
+          this.headers
+        );
+      else
+          
+          this.startFile(true);
     }
 }
 
