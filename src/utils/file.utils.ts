@@ -31,10 +31,11 @@ class FileUtils {
       try {
         writeFileSync(path, headers.join(";") + "\n");
         logger(`File ${file_name} created at ${file_path}`);
-      } catch {
+      } catch (e){
+        console.log(e);
         logger(`There was an error creating ${file_name} at ${file_path}`);
       }
-    }
+    } 
   }
 
   //write stream with the rows and options
