@@ -4,6 +4,7 @@ import { db_path } from "../config/db.config";
 import { v4 } from "uuid";
 
 class UserModel {
+
     file_name: string;
     file_path: string;
     headers: string[];
@@ -103,6 +104,7 @@ class UserModel {
           //if there is only 1 column, we start the file as empty
           this.startFile(true);
     }
+
 }
 
 export default new UserModel();

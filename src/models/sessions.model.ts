@@ -27,8 +27,13 @@ class SessionModel {
   }
 
   //create the file
-  private startFile(overwrite: boolean = false){
-    fileUtils.createEmptyFile(this.file_name, this.file_path, this.headers, overwrite);
+  private startFile(overwrite: boolean = false) {
+    fileUtils.createEmptyFile(
+      this.file_name,
+      this.file_path,
+      this.headers,
+      overwrite
+    );
   }
 
   //this functions returns all sessions from a user id
@@ -72,9 +77,8 @@ class SessionModel {
         data,
         this.headers
       );
-    else
-        //if there is only 1 column, we start the file as empty
-        this.startFile(true);
+    //if there is only 1 column, we start the file as empty
+    else this.startFile(true);
   }
 }
 
