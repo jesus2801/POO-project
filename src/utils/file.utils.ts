@@ -34,7 +34,7 @@ class FileUtils {
       } catch {
         logger(`There was an error creating ${file_name} at ${file_path}`);
       }
-    }
+    } 
   }
 
   //write stream with the rows and options
