@@ -62,7 +62,7 @@ class TaskModel {
 
     //this function updates a task and returns it with the new setted values
     //@ts-ignore
-    public async updateTask(task: Omit<Task, "userId" | "date">): Promise<Task> {
+    public async updateTask(task: Omit<Task, "id" | "userId" | "date">): Promise<Task> {
       const newTask = task
     }
 
