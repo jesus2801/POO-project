@@ -44,7 +44,7 @@ class GoalModel {
       id: v4(),
       done: false,
     };
-    await fileUtils.append([goal],
+    await fileUtils.append([newGoal],
       this.file_path + this.file_name,
       this.headers);
     return newGoal;
