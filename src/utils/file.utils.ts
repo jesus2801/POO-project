@@ -31,8 +31,7 @@ class FileUtils {
       try {
         writeFileSync(path, headers.join(";") + "\n");
         logger(`File ${file_name} created at ${file_path}`);
-      } catch (e){
-        console.log(e);
+      } catch {
         logger(`There was an error creating ${file_name} at ${file_path}`);
       }
     } 
