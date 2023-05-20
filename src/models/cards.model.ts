@@ -2,6 +2,7 @@ import { db_path } from "../config/db.config";
 import { Card } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
 import { v4 } from "uuid";
+
 class CardModel {
   file_name: string;
   file_path: string;
