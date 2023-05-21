@@ -34,7 +34,7 @@ class CardController {
   public async DeleteCard(req: Request, res: Response) {
     try {
       const { IdCard } = req.params;
-      await cardsModel.deleteCard(IdCard);
+      await cardsModel.deleteRegister(IdCard);
       return res.status(200).send({ error: false });
     } catch (e: any) {
       handleHttp(res, e);
