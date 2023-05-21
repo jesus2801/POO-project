@@ -1,19 +1,14 @@
-import { db_path } from "../config/db.config";
 import { Session } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
 import { v4 } from "uuid";
+import Model from "./index.model";
 
 //model for handling the session csv file
-class SessionModel {
-  //csv file information
-  file_name: string;
-  file_path: string;
-  headers: string[];
-
+class SessionModel extends Model {
   //create the file if it doesn't exist and set headers
   constructor() {
+    super();
     this.file_name = "sessions.csv";
-    this.file_path = db_path;
     this.headers = [
       "id",
       "userId",
@@ -23,17 +18,6 @@ class SessionModel {
       "initDate",
       "endDate",
     ];
-    this.startFile();
-  }
-
-  //create the file
-  private startFile(overwrite: boolean = false) {
-    fileUtils.createEmptyFile(
-      this.file_name,
-      this.file_path,
-      this.headers,
-      overwrite
-    );
   }
 
   //this functions returns all sessions from a user id
@@ -58,27 +42,6 @@ class SessionModel {
       this.headers
     );
     return newSession;
-  }
-
-  //this function deletes a session
-  public async deleteSession(id: string): Promise<void> {
-    //gets all the sessions without the session we want to delete
-    const data = await fileUtils.filter(
-      this.file_path + this.file_name,
-      { id },
-      true
-    );
-
-    //rewrites the file with the new data
-    if (data.length > 0)
-      //if there are more than 1 column, we rewrite the file
-      await fileUtils.create(
-        this.file_path + this.file_name,
-        data,
-        this.headers
-      );
-    //if there is only 1 column, we start the file as empty
-    else this.startFile(true);
   }
 }
 

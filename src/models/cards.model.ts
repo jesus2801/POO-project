@@ -1,16 +1,13 @@
-import { db_path } from "../config/db.config";
 import { Card } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
 import { v4 } from "uuid";
+import Model from "./index.model";
 
-class CardModel {
-  file_name: string;
-  file_path: string;
-  headers: string[];
+class CardModel extends Model {
   //create the file if it doesn't exist
   constructor() {
+    super();
     this.file_name = "cards.csv";
-    this.file_path = db_path;
     this.headers = [
       "id",
       "userId",
@@ -20,20 +17,7 @@ class CardModel {
       "back",
       "fibonacci",
     ];
-    this.startFile();
   }
-
-  //create the file
-  private startFile(overwrite: boolean = false) {
-    fileUtils.createEmptyFile(
-      this.file_name,
-      this.file_path,
-      this.headers,
-      overwrite
-    );
-  }
-
-  //USE THROW FOR ERROR HANDLING
 
   //this functions returns all cards from a deck id
   //@ts-ignore
@@ -60,6 +44,7 @@ class CardModel {
       last_review: `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
       fibonacci: 0,
     };
+
     //append the new sessions to the csv
     await fileUtils.append(
       [newCard],
@@ -96,23 +81,6 @@ class CardModel {
     );
 
     return newCard;
-  }
-
-  //this function deletes a card
-  public async deleteCard(id: String): Promise<void> {
-    const data = await fileUtils.filter(
-      this.file_path + this.file_name,
-      { id },
-      true
-    );
-
-    if (data.length > 0)
-      await fileUtils.create(
-        this.file_path + this.file_name,
-        data,
-        this.headers
-      );
-    else this.startFile(true);
   }
 }
 

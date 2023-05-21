@@ -2,28 +2,15 @@ import { v4 } from "uuid";
 import { db_path } from "../config/db.config";
 import { Goal } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
+import Model from "./index.model";
 
-class GoalModel {
-  file_name: string;
-  file_path: string;
-  headers: string[] = ["id", "userId", "title", "description", "done"];
-
+class GoalModel extends Model {
   //create the file if it doesn't exist
   constructor() {
+    super();
     this.file_name = "goals.csv";
-    this.file_path = db_path;
-    this.startFile();
+    this.headers = ["id", "userId", "title", "description", "done"];
   }
-  private startFile(overwrite: boolean = false) {
-    fileUtils.createEmptyFile(
-      this.file_name,
-      this.file_path,
-      this.headers,
-      overwrite
-    );
-  }  
-
-  //USE THROW FOR ERROR HANDLING
 
   //this functions returns all goals from a user id
   //@ts-ignore
@@ -44,28 +31,13 @@ class GoalModel {
       id: v4(),
       done: false,
     };
-    await fileUtils.append([newGoal],
-      this.file_path + this.file_name,
-      this.headers);
-    return newGoal;
-  }
 
-  //this function deletes a goal
-  public async deleteGoal(id: string): Promise<void> {
-    const data = await fileUtils.filter(
-    this.file_path + this.file_name,
-    { id },
-    true
-  );
-
-  if (data.length > 0)
-    await fileUtils.create(
+    await fileUtils.append(
+      [newGoal],
       this.file_path + this.file_name,
-      data,
       this.headers
     );
-  else this.startFile(true);
-
+    return newGoal;
   }
 }
 
