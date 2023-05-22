@@ -1,0 +1,23 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/*from darkest to lightest*/
+:root {
+  --green1: #b9c691;
+  --green2: #ccd5ae;
+  --green3: #e9edc9;
+  --yellow1: #eedfb9;
+  --yellow2: #faedcd;
+  --yellow3: #fefae0;
+  --brown1: #a97847;
+  --brown2: #d4a373;
+  --red1: #eab0b0;
+  --red2: #edc9c9;
+  --purple1: #c3ace0;
+  --purple2: #d9c9ed;
+  --blue1: #ade0dd;
+  --blue2: #c9edeb;
+}
