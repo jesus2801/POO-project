@@ -8,7 +8,10 @@ import {
   faPlus,
   faSquareCheck as faSquareChecked,
 } from "@fortawesome/free-solid-svg-icons";
-import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
+import { BackendTask, Task } from "../../config/interfaces.config";
+import { client } from "../../config/axios.config";
+import { AxiosResponse } from "axios";
+import TaskComponent from "../../components/Task.component";
 
 const opt: Intl.DateTimeFormatOptions = {
   day: "numeric",
@@ -18,11 +21,28 @@ const opt: Intl.DateTimeFormatOptions = {
 
 export default function Home() {
   const [date, setDate] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const getTasks = async () => {
+    const response: AxiosResponse<BackendTask[]> = await client.get(
+      "/tasks/eedd9a84-1578-43a1-919a-14848de1ae35"
+    );
+    setTasks(
+      response.data.map((task) => {
+        return {
+          ...task,
+          done: task.done === "true",
+          date: new Date(task.date),
+        };
+      })
+    );
+  };
 
   useEffect(() => {
+    getTasks();
     const today = new Date().toLocaleDateString("es-ES", opt);
     setDate(today);
-  });
+  }, []);
 
   return (
     <>
@@ -47,10 +67,11 @@ export default function Home() {
               <FontAwesomeIcon icon={faPlus} />
             </p>
 
-            <div className={styles.item}>
-              <p>Informe de estructura</p>
-              <FontAwesomeIcon icon={faSquareCheck} />
-            </div>
+            {tasks.map((task) => (
+              <div key={task.id} className={styles.item}>
+                <TaskComponent task={task} />
+              </div>
+            ))}
           </div>
         </div>
         <div className={styles.container}></div>
