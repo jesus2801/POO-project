@@ -17,6 +17,7 @@ class DeckModel extends Model {
       "initDate",
       "endDate",
     ];
+    this.startFile();
   }
 
   //this functions returns all decks from a user id

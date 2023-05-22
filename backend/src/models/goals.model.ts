@@ -10,6 +10,7 @@ class GoalModel extends Model {
     super();
     this.file_name = "goals.csv";
     this.headers = ["id", "userId", "title", "description", "done"];
+    this.startFile();
   }
 
   //this functions returns all goals from a user id

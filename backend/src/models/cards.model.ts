@@ -17,6 +17,7 @@ class CardModel extends Model {
       "back",
       "fibonacci",
     ];
+    this.startFile();
   }
 
   //this functions returns all cards from a deck id

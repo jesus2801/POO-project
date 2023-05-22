@@ -9,6 +9,7 @@ class UserModel extends Model {
     super();
     this.file_name = "users.csv";
     this.headers = ["id", "name", "password"];
+    this.startFile();
   }
 
   //this function returns the user information from a user id

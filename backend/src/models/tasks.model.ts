@@ -9,6 +9,7 @@ class TaskModel extends Model {
     super();
     this.file_name = "tasks.csv";
     this.headers = ["id", "userId", "content", "category", "done", "date"];
+    this.startFile();
   }
 
   //this functions returns all tasks from a user id

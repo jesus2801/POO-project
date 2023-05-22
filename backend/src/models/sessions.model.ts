@@ -18,6 +18,7 @@ class SessionModel extends Model {
       "initDate",
       "endDate",
     ];
+    this.startFile();
   }
 
   //this functions returns all sessions from a user id

@@ -11,7 +11,6 @@ class Model {
     this.file_path = db_path;
     this.file_name = "";
     this.headers = [];
-    this.startFile();
   }
 
   //create the file
