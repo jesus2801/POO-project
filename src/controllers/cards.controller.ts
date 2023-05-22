@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import cardsModel from "../models/cards.model";
 import { handleHttp } from "../utils/error.handle";
+import { type } from "os";
 class CardController {
   public async GetDeck(req: Request, res: Response) {
     try {
@@ -15,9 +16,10 @@ class CardController {
   public async CreateCard(req: Request, res: Response) {
     try {
       const Card = await cardsModel.createCard(req.body);
-      res.status(201).send(Card);
-    } catch (e: any) {
-      handleHttp(res, e);
+      res.status(201).json(Card);
+    } catch (error: any) {
+      console.log(typeof Object.prototype.toString.call(res));
+      handleHttp(res, error);
     }
   }
 

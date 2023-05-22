@@ -12,3 +12,5 @@ app.use(express.json());
 app.use(router);
 
 app.listen(PORT, () => logger(`Server is running at port: ${PORT}`));
+
+export default app;
