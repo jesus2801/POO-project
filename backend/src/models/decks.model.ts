@@ -11,11 +11,7 @@ class DeckModel extends Model {
     this.headers = [
       "id",
       "userId",
-      "duration",
-      "reviewed_cards",
-      "reached_goals",
-      "initDate",
-      "endDate",
+      "name",
     ];
     this.startFile();
   }
@@ -34,7 +30,6 @@ class DeckModel extends Model {
   //this function creates a deck and returns it with the new setted values
   //@ts-ignore
   public async createDeck(deck: Omit<Deck, "id", "cards">): Promise<Deck> {
-    const date = new Date();
     const newDeck: Deck = {
       ...deck,
       id: v4(),

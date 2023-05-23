@@ -17,9 +17,9 @@ class CardController {
     try {
       const Card = await cardsModel.createCard(req.body);
       res.status(201).json(Card);
-    } catch (error: any) {
+    } catch (e: any) {
       console.log(typeof Object.prototype.toString.call(res));
-      handleHttp(res, error);
+      res.status(400).send({ error: true, message: e.message });
     }
   }
 

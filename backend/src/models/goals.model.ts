@@ -27,6 +27,11 @@ class GoalModel extends Model {
   //this function creates a goal and returns it with the new setted values
   //@ts-ignore
   public async createGoal(goal: Omit<Goal, "id" | "done">): Promise<Goal> {
+    if (!goal || !goal.userId || !goal.description  || !goal.title ) {
+      const error = new Error("Datos del usuario inválidos");
+      (error as any).statusCode = 400;
+      throw error;
+    }
     const newGoal: Goal = {
       ...goal,
       id: v4(),

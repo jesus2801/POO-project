@@ -1,49 +1,48 @@
-import { Goal } from "../src/interfaces/db.interface";
 import app from "../src/index";
 import request from "supertest";
 import {describe, expect, test} from '@jest/globals';
+import { Session } from "../src/interfaces/db.interface";
 
-const goal = {
-    "userId":"juan pedro", 
-    "title":"liberacion bolivariana", 
-    "description":"liberar a venezuela"
-}
-
-const id= "786d55d0-f198-4204-84ea-7104e2a42e76";
+const session:Omit<Session, "id"> ={
+      "userId": "24",
+      "duration": "45",
+      "reviewed_cards": 2,
+      "reached_goals": 4,
+      "initDate": "2021-05-05",
+      "endDate": "2021-05-05",
+} 
 
     describe("POST /", () => {
         test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/goals").send(goal);
-        expect(response.status).toBe(201);
-});     
+    const response = await request(app).post("/sessions").send(session);
+     expect(response.status).toBe(201);
+});
         test("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/goals").send({title: "liberacion bolivariana"});
+    const response = await request(app).post("/sessions").send({});
         expect(response.status).toBe(400);
 });
-
 })
 
+const id = "24"
 describe("GET /", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/goalsa/");
+    const response = await request(app).get("/sessions/");
     expect(response.statusCode).toBe(404);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/goals/"+id);
+    const response = await request(app).get("/sessions/"+id);
     expect(response.statusCode).toBe(200);
 });
-}
-)
+})
 
 describe("DELETE /", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).delete("/");
+    const response = await request(app).delete("/sessions/");
     expect(response.statusCode).toBe(404);
 });
     //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).delete("/goals/"+id);
+    const response = await request(app).delete("/sessions/"+id);
     expect(response.statusCode).toBe(200);
 });
-}
-)
+})
