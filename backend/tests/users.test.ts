@@ -15,6 +15,7 @@ describe("POST /users", () => {
     const response = await request(app).post("/users").send(user);
     expect(response.status).toBe(201);
   });
+
 });
 
 describe("GET /users/:userId", () => {
