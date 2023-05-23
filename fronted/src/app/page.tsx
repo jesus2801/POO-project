@@ -97,9 +97,11 @@ export default function Home() {
       };
     });
 
-    const [l, d] = parseSessionsStatistics(sessions);
-    setLabels(l);
-    setData(d);
+    if (sessions.length > 0) {
+      const [l, d] = parseSessionsStatistics(sessions);
+      setLabels(l);
+      setData(d);
+    }
   };
 
   useEffect(() => {
