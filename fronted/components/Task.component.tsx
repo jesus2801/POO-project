@@ -46,6 +46,18 @@ const TaskComponent: FC<TaskProps> = ({ task, setTasks, tasks }) => {
     loading(false);
 
     setUpdate(false);
+    setTasks(
+      tasks.map((t) => {
+        if (t.id === task.id) {
+          return {
+            ...task,
+            content: value,
+            done: done,
+          };
+        }
+        return t;
+      })
+    );
   };
 
   const onDelete = async () => {

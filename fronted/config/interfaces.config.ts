@@ -20,8 +20,8 @@ export interface Session {
   duration: string; // HH:MM:SS format
   reviewed_cards: number; //number of cards reviewed
   reached_goals: number; //number of goals achieved after finishinng the session
-  initDate: string;
-  endDate: string;
+  initDate: Date;
+  endDate: Date;
 }
 
 export interface Card {
