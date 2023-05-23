@@ -15,7 +15,11 @@ describe("POST /users", () => {
     const response = await request(app).post("/users").send(user);
     expect(response.status).toBe(201);
   });
-
+  
+  test("It should respond with a 400 status code", async () => {
+    const response = await request(app).post("/users").send({});
+    expect(response.status).toBe(400);
+  });
 });
 
 describe("GET /users/:userId", () => {
