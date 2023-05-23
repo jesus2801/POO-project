@@ -38,6 +38,11 @@ class CardModel extends Model {
   public async createCard(
     card: Omit<Card, "id" | "last_review" | "fibonacci">
   ): Promise<Card> {
+    if (!card || !card.deckId || !card.back || !card.front || card.deckId.trim() === "" || card.userId.trim() === "" || card.back.trim() === "" || !card.userId) {
+      const error = new Error("Datos del usuario inválidos");
+      (error as any).statusCode = 400;
+      throw error;
+    }
     const date = new Date();
     const newCard: Card = {
       ...card,

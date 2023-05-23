@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
 import sessionsModel from "../models/sessions.model";
+import { handleHttp } from "../utils/error.handle";
 
 class SessionsController {
   public async createSession(req: Request, res: Response) {
     try {
       const session = await sessionsModel.createSession(req.body);
       res.status(201).send(session);
-    } catch (e) {
-      //error handling
+    } catch (e:any) {
+      res.status(400).send({ error: true, message: e.message });
     }
   }
 
@@ -16,8 +17,8 @@ class SessionsController {
       const { id } = req.params;
       const sessions = await sessionsModel.getUserSessions(id);
       res.status(200).send(sessions);
-    } catch (e) {
-      //error handling
+    } catch (e:any) {
+      handleHttp(res, e);
     }
   }
 
@@ -26,8 +27,8 @@ class SessionsController {
       const { id } = req.params;
       await sessionsModel.deleteRegister(id);
       return res.status(200).send({ error: false });
-    } catch {
-      //error handling
+    } catch (e:any){
+      handleHttp(res, e);
     }
   }
 }
