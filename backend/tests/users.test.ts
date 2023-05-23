@@ -1,5 +1,5 @@
 import { User } from "../src/interfaces/db.interface";
-import app from "../src/index";
+import app from "./indextest";
 import request from "supertest";
 import { describe, expect, test } from '@jest/globals';
 
@@ -57,3 +57,4 @@ describe("DELETE /users/:userId", () => {
     expect(response.statusCode).toBe(200);
   });
 });
+

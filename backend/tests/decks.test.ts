@@ -1,5 +1,5 @@
 import { Deck } from "../src/interfaces/db.interface";
-import app from "../src/index";
+import app from "./indextest";
 import request from "supertest";
 import { describe, expect, test } from '@jest/globals';
 
@@ -7,7 +7,7 @@ const deck: Omit<Deck, "id"> = {
     userId: "ec441444-7cda-4628-8ee6-cf0fe32ee5d9",
     name: "Deck 1",
 };
-
+app.listen(3009);
 const id = "9a57f0d8-9681-4440-8f6f-e17ba6eff5c6";
 console.log("Userid: " + deck.userId);
 describe("POST /decks", () => {

@@ -1,7 +1,8 @@
-import app from "../src/index";
+import app from "./indextest";
 import request from "supertest";
 import {describe, expect, test} from '@jest/globals';
 import { Session } from "../src/interfaces/db.interface";
+
 
 const session:Omit<Session, "id"> ={
       "userId": "24",
@@ -46,3 +47,4 @@ describe("DELETE /", () => {
     expect(response.statusCode).toBe(200);
 });
 })
+
