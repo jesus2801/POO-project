@@ -62,3 +62,18 @@ export interface Auth {
     name: string;
     password: string;
   }
+
+export interface habit {
+    name: string;
+    id: string;
+    userId: string;
+    fullfilled: [
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,
+    ];
+  }
