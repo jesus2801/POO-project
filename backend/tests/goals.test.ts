@@ -15,6 +15,10 @@ const id= "786d55d0-f198-4204-84ea-7104e2a42e76";
         test("It should respond with a 201 status code", async () => {
     const response = await request(app).post("/goals").send(goal);
         expect(response.status).toBe(201);
+});     
+        test("It should respond with a 400 status code", async () => {
+    const response = await request(app).post("/goals").send({title: "liberacion bolivariana"});
+        expect(response.status).toBe(400);
 });
 
 })

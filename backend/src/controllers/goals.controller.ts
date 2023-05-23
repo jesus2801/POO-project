@@ -18,7 +18,7 @@ class GoalController {
       const goal = await goalsModel.createGoal(req.body);
       res.status(201).send(goal);
     } catch (e: any) {
-      handleHttp(res, e);
+      res.status(400).send({ error: true, message: e.message });
     }
   }
 

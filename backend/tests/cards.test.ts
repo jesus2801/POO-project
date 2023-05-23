@@ -15,10 +15,13 @@ const card:Omit<Card, "id" | "last_review" | "fibonacci"> ={
     const response = await request(app).post("/cards").send(card);
      expect(response.status).toBe(201);
 });
+        test("It should respond with a 400 status code", async () => { 
+    const response = await request(app).post("/cards").send({});
+        expect(response.status).toBe(400);})
 })
 
 
-const id = "0ee015fe-cda5-4ddf-9bf2-cd3e64509a93"
+const id = "3c380ee7-f02e-4a33-9dd1-1801903f115c"
 describe("GET /", () => {
     test("It should respond with a 404 status code", async () => {
     const response = await request(app).get("/cards/");

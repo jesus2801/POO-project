@@ -17,6 +17,10 @@ const session:Omit<Session, "id"> ={
     const response = await request(app).post("/sessions").send(session);
      expect(response.status).toBe(201);
 });
+        test("It should respond with a 400 status code", async () => {
+    const response = await request(app).post("/sessions").send({});
+        expect(response.status).toBe(400);
+});
 })
 
 const id = "24"
@@ -27,6 +31,18 @@ describe("GET /", () => {
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
     const response = await request(app).get("/sessions/"+id);
+    expect(response.statusCode).toBe(200);
+});
+})
+
+describe("DELETE /", () => {
+    test("It should respond with a 404 status code", async () => {
+    const response = await request(app).delete("/sessions/");
+    expect(response.statusCode).toBe(404);
+});
+    //se necesita un id para que funcione
+    test("It should respond with a 200 status code", async () => {
+    const response = await request(app).delete("/sessions/"+id);
     expect(response.statusCode).toBe(200);
 });
 })

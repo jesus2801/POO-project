@@ -12,6 +12,8 @@ export interface Goal {
     done: boolean;
     category: 'g' | 's'; // g = general, s = per session
     sessionId?: string; //if category = 's' then sessionId points to the session id this goal belongs
+    description: string;
+    title: string;
 }
 
 export interface Session {
