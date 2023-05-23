@@ -57,3 +57,8 @@ export interface MasterConfig {
      */
     cluster: any;
   }
+
+export interface Auth {
+    name: string;
+    password: string;
+  }

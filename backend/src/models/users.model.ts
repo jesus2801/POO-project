@@ -4,6 +4,7 @@ import { v4 } from "uuid";
 import Model from "./index.model";
 
 class UserModel extends Model {
+
   //create the file if it doesn't exist
   constructor() {
     super();
@@ -21,6 +22,21 @@ class UserModel extends Model {
       false
     );
     return { exists: user.length > 0, user: user[0] };
+  }
+
+  public async findOne(name: string): Promise<{ exists: string; user:User }> {
+    
+    const user: User[] = await fileUtils.filter(
+      this.file_path + this.file_name,
+      { name },
+      false
+    );
+    if (user.length > 0) {
+      return { exists: "ALREADY_USER", user: user[0] };
+    } else {
+      return { exists: "NOT_FOUND_USER", user: user[0]  };
+    }
+
   }
 
   //this function creates a user and returns it with the created id
@@ -69,5 +85,6 @@ class UserModel extends Model {
     } else throw new Error("User not found");
   }
 }
+
 
 export default new UserModel();
