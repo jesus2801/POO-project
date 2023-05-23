@@ -5,7 +5,7 @@ import { encrypt, verified } from "../utils/bcrypt.handle";
 import { generateToken } from "../utils/jwt.handle";
 
 const registerNewUser = async ({ id, password, name }: User) => {
-  const checkIs = await UserModel.getUser(id);
+  const checkIs = await UserModel.getUser(name);
   if (checkIs.exists) return "ALREADY_USER";
   const passHash = await encrypt(password); //TODO 12345678
   const registerNewUser = await UserModel.createUser({
@@ -27,10 +27,10 @@ const loginUser = async ({ name, password }: Auth) => {
 
   if (!isCorrect) return "PASSWORD_INCORRECT";
 
-  const token = generateToken(checkIs.user.id);
+  const token = generateToken(checkIs.user.id, checkIs.user.name);
   const data = {
     token,
-    user: checkIs,
+    user: checkIs.user,
   };
   return data;
 };
