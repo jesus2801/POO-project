@@ -8,7 +8,7 @@ class UsersController {
       const user = await usersModel.createUser(req.body);
       res.status(201).send(user);
     } catch (e: any) {
-      handleHttp(res, e);
+      res.status(400).send(e.message);
     }
   }
 
