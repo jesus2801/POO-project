@@ -20,6 +20,8 @@ const loginUser = async ({ name, password }: Auth) => {
   const checkIs = await UserModel.findOne(name);
   if (!checkIs.exists) return "NOT_FOUND_USER";
 
+  //we compare the password with the hash
+
   const passwordHash = checkIs.user.password; //TODO el encriptado!
   const isCorrect = await verified(password, passwordHash);
 
