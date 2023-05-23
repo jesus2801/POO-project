@@ -50,3 +50,10 @@ export interface Deck {
     userId: string;
     name: string;
 }
+
+export interface MasterConfig {
+    /**
+     * Cluster principal
+     */
+    cluster: any;
+  }

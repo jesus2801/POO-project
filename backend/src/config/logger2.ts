@@ -11,4 +11,4 @@ const infoLogger = createLogger({
     transports: [new transports.Console()],
 });
 
-export default infoLogger.info
+export default infoLogger.error
