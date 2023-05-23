@@ -48,3 +48,8 @@ export interface Deck {
     userId: string;
     name: string;
 }
+
+export interface Auth {
+    name: string;
+    password: string;
+  }
