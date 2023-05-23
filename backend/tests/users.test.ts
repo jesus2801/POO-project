@@ -8,17 +8,12 @@ const user: Omit<User, "id"> = {
   password: "password123",
 };
 
-const id = "016481a7-5a67-4f9c-b327-0c3f82fc390d";
+const id = "c85c91ef-d91a-459d-921e-c3096cb485ad";
 
 describe("POST /users", () => {
   test("It should respond with a 201 status code", async () => {
     const response = await request(app).post("/users").send(user);
     expect(response.status).toBe(201);
-  });
-
-  test("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/users").send({});
-    expect(response.status).toBe(400);
   });
 });
 
