@@ -35,6 +35,19 @@ class SessionModel extends Model {
   //this function creates a session and returns it with the new setted values
   public async createSession(session: Omit<Session, "id">): Promise<Session> {
     //creates the new session with a unique id
+    if (
+      !session ||
+      !session.userId ||
+      !session.duration ||
+      !session.reviewed_cards ||
+      !session.reached_goals ||
+      !session.initDate ||
+      !session.endDate
+    ) {
+      const error = new Error("Datos de la sesión inválidos");
+      (error as any).statusCode = 400;
+      throw error;
+    }
     const newSession: Session = { ...session, id: v4() };
     //append the new sessions to the csv
     await fileUtils.append(
