@@ -5,14 +5,15 @@ import { Task } from "../config/interfaces.config";
 import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
 import { client } from "../config/axios.config";
 import { loading } from "../utils/alerts";
+import { ContextMenu, ContextMenuTrigger, MenuItem } from "react-contextmenu";
 
 interface TaskProps {
   task: Task;
+  setTasks: (tasks: Task[]) => void;
+  tasks: Task[];
 }
 
-const delay = 2000;
-
-const TaskComponent: FC<TaskProps> = ({ task }) => {
+const TaskComponent: FC<TaskProps> = ({ task, setTasks, tasks }) => {
   const [value, setValue] = useState(task.content);
   const [update, setUpdate] = useState(false);
   const [done, setDone] = useState(task.done);
@@ -47,15 +48,30 @@ const TaskComponent: FC<TaskProps> = ({ task }) => {
     setUpdate(false);
   };
 
+  const onDelete = async () => {
+    loading(true);
+    await client.delete(`/tasks/${task.id}`);
+    loading(false);
+
+    setTasks(tasks.filter((t) => task.id !== t.id));
+  };
+
   return (
     <>
-      <div>
+      {/* @ts-ignore */}
+      <ContextMenuTrigger id={task.id}>
+        {/* @ts-ignore */}
+        <ContextMenu id={task.id}>
+          {/* @ts-ignore */}
+          <MenuItem onClick={onDelete}>Delete</MenuItem>
+        </ContextMenu>
         <input value={value} onChange={onChangeContent} />
         <FontAwesomeIcon
           onClick={onChangeChecked}
           icon={done ? faSquareChecked : faSquareCheck}
         />
-      </div>
+      </ContextMenuTrigger>
+
       {update && <button onClick={updateTask}>Actualizar</button>}
     </>
   );

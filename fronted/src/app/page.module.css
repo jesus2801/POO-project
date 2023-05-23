@@ -28,7 +28,6 @@
 }
 
 .container {
-  background-color: aqua;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,6 +83,7 @@
   color: var(--brown1);
   margin-left: 10px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .tasks .item {

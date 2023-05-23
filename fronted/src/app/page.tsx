@@ -12,6 +12,7 @@ import { BackendTask, Task } from "../../config/interfaces.config";
 import { client } from "../../config/axios.config";
 import { AxiosResponse } from "axios";
 import TaskComponent from "../../components/Task.component";
+import { obtainTask } from "../../utils/alerts";
 
 const opt: Intl.DateTimeFormatOptions = {
   day: "numeric",
@@ -37,6 +38,10 @@ export default function Home() {
       })
     );
   };
+
+  const addTask = ()=> {
+    const task = obtainTask();
+  }
 
   useEffect(() => {
     getTasks();
@@ -64,12 +69,12 @@ export default function Home() {
           <div className={styles.tasks}>
             <p className={styles.title}>
               Tareas Pendientes
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faPlus} onClick={addTask} />
             </p>
 
             {tasks.map((task) => (
               <div key={task.id} className={styles.item}>
-                <TaskComponent task={task} />
+                <TaskComponent task={task} setTasks={setTasks} tasks={tasks} />
               </div>
             ))}
           </div>
