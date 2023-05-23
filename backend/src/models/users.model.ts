@@ -26,6 +26,11 @@ class UserModel extends Model {
   //this function creates a user and returns it with the created id
   //@ts-ignore
   public async createUser(user: Omit<User, "id">): Promise<User> {
+    if (!user || !user.name || !user.password || user.name.trim() === "" || user.password.trim() === "" || user.password.length < 8) {
+      const error = new Error("Datos del usuario inválidos");
+      (error as any).statusCode = 400;
+      throw error;
+    }
     const newUser: User = {
       ...user,
       id: v4(),
