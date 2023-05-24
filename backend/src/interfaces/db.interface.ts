@@ -63,7 +63,7 @@ export interface Auth {
     password: string;
   }
 
-export interface habit {
+export interface Habit {
     name: string;
     id: string;
     userId: string;

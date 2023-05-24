@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import habitsModel from '../models/habits.model';
 import { handleHttp } from '../utils/error.handle';
 
-class habitController {
+class HabitController {
     public async GetUserHabits(req: Request, res: Response) {
         try {
             const { userId } = req.params;
@@ -43,4 +43,4 @@ class habitController {
     }
 }
 
-export default new habitController();
+export default new HabitController();

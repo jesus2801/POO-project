@@ -1,10 +1,10 @@
 import { v4 } from "uuid";
 import { db_path } from "../config/db.config";
-import { habit } from "../interfaces/db.interface";
+import { Habit } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
 import Model from "./index.model";
 
-class habitModel extends Model {
+class HabitModel extends Model {
     //create the file if it doesn't exist
     constructor() {
         super();
@@ -15,8 +15,8 @@ class habitModel extends Model {
 
     //this functions returns all habits from a user id
     //@ts-ignore
-    public async getUserhabits(userId: string): Promise<habit[]> {
-        const habits: habit[] = await fileUtils.filter(
+    public async getUserhabits(userId: string): Promise<Habit[]> {
+        const habits: Habit[] = await fileUtils.filter(
             this.file_path + this.file_name,
             { userId },
             false
@@ -26,13 +26,13 @@ class habitModel extends Model {
 
     //this function creates a habit and returns it with the new setted values
     //@ts-ignore
-    public async createhabit(habit: Omit<habit,"id" | "Fullfilled">): Promise<habit> {
+    public async createhabit(habit: Omit<Habit,"id" | "Fullfilled">): Promise<Habit> {
         if (!habit || !habit.userId || !habit.name) {
             const error = new Error("Datos del usuario inválidos");
             (error as any).statusCode = 400;
             throw error;
         }
-        const newhabit: habit = {
+        const newHabit: Habit = {
             ...habit,
             id: v4(),
             fullfilled: [
@@ -47,40 +47,41 @@ class habitModel extends Model {
         };
 
         await fileUtils.append(
-            [newhabit],
+            [newHabit],
             this.file_path + this.file_name,
             this.headers
         );
-        return newhabit;
+        return newHabit;
     }
 
     //this function updates a habit and returns it with the new setted values
     //@ts-ignore
     public async updatehabit(
-        habit: Omit<habit, "id" | "userId">,
+        habit: Omit<Habit, "name" |"id" | "userId" >,
         id: string
-    ): Promise<habit> {
-        const habits: habit[] = await fileUtils.filter(
+    ): Promise<Habit> {
+        const habits: Habit[] = await fileUtils.filter(
             this.file_path + this.file_name,
             { id },
             false
-    );
-    const newhabit: habit = { ...habit, id: id, userId: habits[0].userId };
+        );
+        const newHabit: Habit = { ...habit, id: id, userId: habits[0].userId, name: habits[0].name };
 
-    const newRows = await fileUtils.update(
-        this.file_path + this.file_name,
-        "id",
-        id,
-        newhabit,
-    );
+        const newRows = await fileUtils.update(
+            this.file_path + this.file_name,
+            "id",
+            id,
+            newHabit
+        );
 
-    await fileUtils.create(
-        this.file_path + this.file_name,
-        newRows,
-        this.headers
-    );
-    return newhabit;
-    }            
+        await fileUtils.create(
+            this.file_path + this.file_name,
+            newRows,
+            this.headers,
+        );
+
+        return newHabit;    
+    }     
 }
 
-export default new habitModel();
+export default new HabitModel();
