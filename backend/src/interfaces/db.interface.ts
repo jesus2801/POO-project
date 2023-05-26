@@ -67,6 +67,19 @@ export interface Auth {
     password: string;
   }
 
+export interface Habit {
+    name: string;
+    id: string;
+    userId: string;
+    fullfilled: [
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,
+    ];
   export interface RequestExt extends Request {
     user?: JwtPayload | { id: string };
   }
