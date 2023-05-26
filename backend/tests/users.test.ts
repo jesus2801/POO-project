@@ -1,14 +1,15 @@
 import { User } from "../src/interfaces/db.interface";
-import app from "../src/index";
+import app from "./indextest";
 import request from "supertest";
 import { describe, expect, test } from '@jest/globals';
+
 
 const user: Omit<User, "id"> = {
   name: "Pipe Santos",
   password: "password123",
 };
 
-const id = "c85c91ef-d91a-459d-921e-c3096cb485ad";
+const id = "bdc74190-c0a4-4cfc-94bf-fb1cf6ce1ab3";
 
 describe("POST /users", () => {
   test("It should respond with a 201 status code", async () => {
@@ -57,3 +58,4 @@ describe("DELETE /users/:userId", () => {
     expect(response.statusCode).toBe(200);
   });
 });
+

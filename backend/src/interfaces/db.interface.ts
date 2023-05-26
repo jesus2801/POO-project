@@ -1,3 +1,7 @@
+
+import { JwtPayload } from "jsonwebtoken";
+import { Request } from "express";
+
 export interface User {
     id: string;
     name: string;
@@ -61,4 +65,21 @@ export interface MasterConfig {
 export interface Auth {
     name: string;
     password: string;
+  }
+
+export interface Habit {
+    name: string;
+    id: string;
+    userId: string;
+    fullfilled: [
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,boolean,boolean,boolean,boolean,
+        boolean,
+    ];
+  export interface RequestExt extends Request {
+    user?: JwtPayload | { id: string };
   }

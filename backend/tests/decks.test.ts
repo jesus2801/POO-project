@@ -1,5 +1,5 @@
 import { Deck } from "../src/interfaces/db.interface";
-import app from "../src/index";
+import app from "./indextest";
 import request from "supertest";
 import { describe, expect, test } from '@jest/globals';
 
@@ -8,7 +8,7 @@ const deck: Omit<Deck, "id"> = {
     name: "Deck 1",
 };
 
-const id = "9a57f0d8-9681-4440-8f6f-e17ba6eff5c6";
+const id = "38e45700-c267-499f-81dd-efd4e3d654d9";
 console.log("Userid: " + deck.userId);
 describe("POST /decks", () => {
   test("It should respond with a 201 status code", async () => {
