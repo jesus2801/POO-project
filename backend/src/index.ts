@@ -10,6 +10,8 @@ import logger2 from "./config/logger2";
 const cpusLength = os.cpus().length;
 const logger=infoLogger
 
+
+
 if (cluster.isPrimary) {
     const master = new Master({ cluster: cluster });
   
@@ -31,13 +33,5 @@ app.use(router);
 app.listen(PORT, () => logger(`Server is running at port: ${PORT}`));
 
 
-
       }
-    
-
-
-
-
-
-
 
