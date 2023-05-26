@@ -20,6 +20,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import Link from "next/link";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -96,9 +97,11 @@ export default function Home() {
       };
     });
 
-    const [l, d] = parseSessionsStatistics(sessions);
-    setLabels(l);
-    setData(d);
+    if (sessions.length > 0) {
+      const [l, d] = parseSessionsStatistics(sessions);
+      setLabels(l);
+      setData(d);
+    }
   };
 
   useEffect(() => {
@@ -190,7 +193,60 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.container}></div>
+        <div className={styles.container}>
+          <div className={styles.menu}>
+            <div className={styles.menu_item}>
+              <Link href="/habits">
+                <div>
+                  <Image
+                    src="/calendar.svg"
+                    width={52}
+                    height={52}
+                    alt="calendario"
+                  />
+                </div>
+              </Link>
+              <p>Hábitos Mensuales</p>
+            </div>
+
+            <div className={styles.menu_item}>
+              <Link href="/flashcards">
+                <div>
+                  <Image src="/cards.svg" width={52} height={52} alt="cards" />
+                </div>
+              </Link>
+              <p>Flash Cards</p>
+            </div>
+
+            <div className={styles.menu_item}>
+              <Link href="/recall">
+                <div>
+                  <Image
+                    src="/recall.svg"
+                    width={52}
+                    height={52}
+                    alt="active recall"
+                  />
+                </div>
+              </Link>
+              <p>Active Recall</p>
+            </div>
+
+            <div className={styles.menu_item}>
+              <Link href="/flowtime">
+                <div>
+                  <Image
+                    src="/flow.svg"
+                    width={52}
+                    height={52}
+                    alt="flowtime"
+                  />
+                </div>
+              </Link>
+              <p>Flowtime</p>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );

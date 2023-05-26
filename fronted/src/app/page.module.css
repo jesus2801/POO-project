@@ -147,6 +147,7 @@
   margin-top: 20px;
   padding: 23px;
   border-radius: 55px;
+  min-height: 150px;
 }
 
 .container .reminders .reminder {
@@ -189,7 +190,7 @@
   justify-content: center;
   margin-top: 20px;
   width: 100%;
-  border: 2px solid var(--brown2);
+  border: 3px solid var(--brown2);
   border-radius: 55px;
   padding: 20px 10px;
 }
@@ -197,4 +198,44 @@
 .container .statistics canvas {
   width: 500px !important;
   height: 240px !important;
+}
+
+.container .menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-top: 30px;
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--brown2);
+  border-radius: 55px;
+  padding: 20px;
+  background-color: var(--yellow3);
+}
+
+.container .menu .menu_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.container .menu .menu_item div {
+  background-color: #fff;
+  border: 3px solid var(--brown1);
+  padding: 8px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 200ms ease transform;
+}
+
+.container .menu .menu_item div:hover {
+  transform: translateX(-5px);
+}
+
+.container .menu .menu_item p {
+  font-weight: 600;
+  font-size: 17px;
+  margin-left: 10px;
 }
