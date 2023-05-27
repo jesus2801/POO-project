@@ -12,7 +12,6 @@ class SessionModel extends Model {
     this.headers = [
       "id",
       "userId",
-      "duration",
       "reviewed_cards",
       "reached_goals",
       "initDate",
@@ -38,7 +37,6 @@ class SessionModel extends Model {
     if (
       !session ||
       !session.userId ||
-      !session.duration ||
       !session.reviewed_cards ||
       !session.reached_goals ||
       !session.initDate ||
