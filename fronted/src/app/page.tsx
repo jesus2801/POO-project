@@ -21,6 +21,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import Link from "next/link";
+import { NextPage } from "next";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -30,7 +31,7 @@ const opt: Intl.DateTimeFormatOptions = {
   year: "numeric",
 };
 
-export default function Home() {
+const Home: NextPage = () => {
   const [date, setDate] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [completedTasks, setCompletedTasks] = useState(0);
@@ -39,9 +40,7 @@ export default function Home() {
   const [data, setData] = useState<number[]>([]);
 
   const getTasks = async () => {
-    const response: AxiosResponse<BackendTask[]> = await client.get(
-      "/tasks/eedd9a84-1578-43a1-919a-14848de1ae35"
-    );
+    const response: AxiosResponse<BackendTask[]> = await client.get("/tasks");
     setTasks(
       response.data.map((task) => {
         return {
@@ -66,10 +65,7 @@ export default function Home() {
       );
 
       loading(true);
-      const response = await client.post("/tasks", {
-        ...task,
-        userId: "eedd9a84-1578-43a1-919a-14848de1ae35",
-      });
+      const response = await client.post("/tasks", task);
       loading(false);
 
       setTasks([
@@ -86,9 +82,7 @@ export default function Home() {
   };
 
   const getStatistics = async () => {
-    const response = await client.get(
-      `/sessions/eedd9a84-1578-43a1-919a-14848de1ae35`
-    );
+    const response = await client.get(`/sessions`);
     const sessions = response.data.map((s: Session) => {
       return {
         ...s,
@@ -250,4 +244,6 @@ export default function Home() {
       </main>
     </>
   );
-}
+};
+
+export default Home;

@@ -3,15 +3,20 @@ import { registerNewUser, loginUser } from "../services/auth";
 
 const registerCtrl = async ({ body }: Request, res: Response) => {
   const responseUser = await registerNewUser(body);
-  res.send(responseUser);
+  if (responseUser === "ALREADY_USER") {
+    res.status(401);
+    res.send(responseUser);
+  } else {
+    res.send(responseUser);
+  }
 };
 
 const loginCtrl = async ({ body }: Request, res: Response) => {
   const { name, password } = body;
   const responseUser = await loginUser({ name, password });
 
-  if (responseUser === "PASSWORD_INCORRECT") {
-    res.status(403);
+  if (typeof responseUser === "string") {
+    res.status(401);
     res.send(responseUser);
   } else {
     res.send(responseUser);

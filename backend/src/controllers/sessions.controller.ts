@@ -7,17 +7,16 @@ class SessionsController {
     try {
       const session = await sessionsModel.createSession(req.body);
       res.status(201).send(session);
-    } catch (e:any) {
+    } catch (e: any) {
       res.status(400).send({ error: true, message: e.message });
     }
   }
 
   public async getUserSessions(req: Request, res: Response) {
     try {
-      const { id } = req.params;
-      const sessions = await sessionsModel.getUserSessions(id);
+      const sessions = await sessionsModel.getUserSessions(req.body.user.id);
       res.status(200).send(sessions);
-    } catch (e:any) {
+    } catch (e: any) {
       handleHttp(res, e);
     }
   }
@@ -27,7 +26,7 @@ class SessionsController {
       const { id } = req.params;
       await sessionsModel.deleteRegister(id);
       return res.status(200).send({ error: false });
-    } catch (e:any){
+    } catch (e: any) {
       handleHttp(res, e);
     }
   }

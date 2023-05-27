@@ -4,16 +4,20 @@ import UserModel from "../models/users.model";
 import { encrypt, verified } from "../utils/bcrypt.handle";
 import { generateToken } from "../utils/jwt.handle";
 
-const registerNewUser = async ({ id, password, name }: User) => {
-  const checkIs = await UserModel.getUser(name);
+const registerNewUser = async ({ password, name }: User) => {
+  const checkIs = await UserModel.findOne(name);
   if (checkIs.exists) return "ALREADY_USER";
   const passHash = await encrypt(password); //TODO 12345678
   const registerNewUser = await UserModel.createUser({
     password: passHash,
     name,
   });
+  const token = generateToken(registerNewUser.id, registerNewUser.name);
   //TODO 123456
-  return registerNewUser;
+  return {
+    token,
+    user: registerNewUser,
+  };
 };
 
 const loginUser = async ({ name, password }: Auth) => {

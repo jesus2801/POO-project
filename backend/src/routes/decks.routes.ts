@@ -1,11 +1,12 @@
 import { Router } from "express";
 import decksController from "../controllers/decks.controller";
+import { checkJwt } from "../middlewares/session";
 
 const router = Router();
 
-router.post("/", decksController.createDeck);
-router.get("/:userId", decksController.getDecks);
-router.put("/:id", decksController.updateDeck);
-router.delete("/:id", decksController.deleteDeck);
+router.post("/", checkJwt, decksController.createDeck);
+router.get("/:userId", checkJwt, decksController.getDecks);
+router.put("/:id", checkJwt, decksController.updateDeck);
+router.delete("/:id", checkJwt, decksController.deleteDeck);
 
 export { router };

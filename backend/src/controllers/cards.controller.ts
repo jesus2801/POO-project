@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import cardsModel from "../models/cards.model";
 import { handleHttp } from "../utils/error.handle";
-import { type } from "os";
+
 class CardController {
   public async GetDeck(req: Request, res: Response) {
     try {

@@ -1,11 +1,12 @@
 import { Router } from "express";
 import tasksController from "../controllers/tasks.controller";
+import { checkJwt } from "../middlewares/session";
 
 const router = Router();
 
-router.post("/", tasksController.createTask);
-router.get("/:userId", tasksController.getTasks);
-router.put("/:id", tasksController.updateTask);
-router.delete("/:id", tasksController.deleteTask);
+router.post("/", checkJwt, tasksController.createTask);
+router.get("/", checkJwt, tasksController.getTasks);
+router.put("/:id", checkJwt, tasksController.updateTask);
+router.delete("/:id", checkJwt, tasksController.deleteTask);
 
 export { router };
