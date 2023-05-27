@@ -7,7 +7,8 @@
     "dev": "nodemon ./src/index.ts",
     "build": "tsc",
     "start": "node ./dist/index.ts",
-    "test": "jest --watchAll --verbose --detectOpenHandles"
+    "test": "jest --watchAll --verbose --detectOpenHandles",
+    "auto": "autocannon -c 100 -d 10 -p 10 http://localhost:3005"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@fast-csv/format": "^4.3.5",
     "@fast-csv/parse": "^4.3.6",
+    "autocannon": "^7.11.0",
     "bcrypt": "^5.1.0",
     "@fastify/express": "^2.3.0",
     "bcryptjs": "^2.4.3",
