@@ -1,7 +1,8 @@
 import { Card } from "../src/interfaces/db.interface";
-import app from "../src/index";
+import app from "./indextest";
 import request from "supertest";
 import {describe, expect, test} from '@jest/globals';
+
 
 
 const card:Omit<Card, "id" | "last_review" | "fibonacci"> ={
@@ -54,3 +55,4 @@ describe("PUT /", () => {
     expect(response.statusCode).toBe(200);
 });
 })
+

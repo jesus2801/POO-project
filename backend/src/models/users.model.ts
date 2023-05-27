@@ -24,7 +24,7 @@ class UserModel extends Model {
     return { exists: user.length > 0, user: user[0] };
   }
 
-  public async findOne(name: string): Promise<{ exists: string; user:User }> {
+  public async findOne(name: string): Promise<{ exists: boolean; user:User }> {
     
     const user: User[] = await fileUtils.filter(
       this.file_path + this.file_name,
@@ -32,9 +32,9 @@ class UserModel extends Model {
       false
     );
     if (user.length > 0) {
-      return { exists: "ALREADY_USER", user: user[0] };
+      return { exists: true, user: user[0] };
     } else {
-      return { exists: "NOT_FOUND_USER", user: user[0]  };
+      return { exists: false, user: user[0]  };
     }
 
   }
