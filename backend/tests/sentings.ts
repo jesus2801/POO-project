@@ -1,29 +1,24 @@
 import * as fs from 'fs';
 import * as csv from 'fast-csv';
 
-const obtenerPrimerDato = (archivoCsv: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    let primerDato: string | null = null;
 
-    fs.createReadStream(archivoCsv)
-      .pipe(csv.parse({ headers: true }))
-      .on('error', (error) => {
-        reject(error);
-      })
-      .on('data', (dato: any) => {
-        // Obtener el primer dato
-        if (!primerDato) {
-          primerDato = dato[Object.keys(dato)[0]];
-        }
+
+export function extraerPrimeraFila(filePath:string): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const csvData: any[] = [];
+
+    fs.createReadStream(filePath)
+      .pipe(csv.parse({ headers: false }))
+      .on('data', (row: any) => {
+        csvData.push(row);
       })
       .on('end', () => {
-        if (primerDato) {
-          resolve(primerDato);
+        if (csvData.length > 0) {
+          resolve(csvData[0]);
         } else {
-          reject(new Error('No se encontró ningún dato en el archivo CSV.'));
+          reject(new Error('No se encontraron filas en el archivo CSV.'));
         }
       });
   });
-};
+}
 
-export default obtenerPrimerDato;
