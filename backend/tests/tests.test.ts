@@ -266,7 +266,6 @@ describe("PUT /tasks", () => {
 
 const session:Omit<Session, "id"> ={
       "userId": "24",
-      "duration": "45",
       "reviewed_cards": 2,
       "reached_goals": 4,
       "initDate": "2021-05-05",

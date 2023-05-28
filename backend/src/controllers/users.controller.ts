@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
 import usersModel from "../models/users.model";
 import { handleHttp } from "../utils/error.handle";
+import { isEmpty } from "../utils/validation.utils";
 
 class UsersController {
   public async createUser(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["name", "password"])) {
+        return res.status(400).send({ error: true, message: "Missing required fields" });
+      }
       const user = await usersModel.createUser(req.body);
       res.status(201).send(user);
     } catch (e: any) {
@@ -24,6 +28,9 @@ class UsersController {
 
   public async updateUser(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["name", "password"])) {
+        return res.status(500).send({ error: true, message: "Missing required fields" });
+      }
       const { id } = req.params;
       const user = await usersModel.updateUser(req.body, id);
       res.status(200).send(user);
