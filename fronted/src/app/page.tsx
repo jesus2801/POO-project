@@ -10,7 +10,11 @@ import { client } from "../config/axios.config";
 import { AxiosResponse } from "axios";
 import TaskComponent from "../components/Task.component";
 import { loading, obtainInfo } from "../utils/alerts";
-import { dueDate, parseSessionsStatistics } from "../utils/functions.utils";
+import {
+  dueDate,
+  parseSessionsStatistics,
+  randomMessage,
+} from "../utils/functions.utils";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -39,6 +43,7 @@ const Home: NextPage = () => {
   const [reminders, setReminders] = useState<Task[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
   const [data, setData] = useState<number[]>([]);
+  const [quote, setQuote] = useState("");
 
   const getTasks = async () => {
     const response: AxiosResponse<BackendTask[]> = await client.get("/tasks");
@@ -104,6 +109,7 @@ const Home: NextPage = () => {
     getStatistics();
     const today = new Date().toLocaleDateString("es-ES", opt);
     setDate(today);
+    setQuote(randomMessage());
   }, []);
 
   useEffect(() => {
@@ -155,10 +161,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className={styles.container}>
-          <p className={styles.quote}>
-            Cree en ti mismo y en lo que eres. Sé consciente de que hay algo en
-            tu interior que es más grande que cualquier obstáculo
-          </p>
+          <p className={styles.quote}>{quote}</p>
           <div className={styles.divider}></div>
           <div className={styles.reminders}>
             {reminders.map((reminder) => (

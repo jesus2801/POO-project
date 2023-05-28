@@ -1,3 +1,4 @@
+import { messages } from "@/config/messages";
 import { Session } from "../config/interfaces.config";
 
 export const dueDate = (date: Date): string => {
@@ -79,3 +80,6 @@ function printDate(date: Date) {
   };
   console.log(date.toLocaleTimeString("es-ES", opcionesHora));
 }
+
+export const randomMessage = () =>
+  messages[Math.floor(Math.random() * (43 + 1))];

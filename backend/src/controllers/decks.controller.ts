@@ -14,8 +14,7 @@ class DecksController {
 
   public async getDecks(req: Request, res: Response) {
     try {
-      const { userId } = req.params;
-      const user = await decksModel.getUserDecks(userId);
+      const user = await decksModel.getUserDecks(req.body.user.id);
       res.status(200).send(user);
     } catch (e: any) {
       handleHttp(res, e);
