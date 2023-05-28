@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import cardsModel from "../models/cards.model";
 import { handleHttp } from "../utils/error.handle";
+import { isEmpty } from "../utils/validation.utils";
 
 /**
  * 
@@ -26,6 +27,9 @@ class CardController {
    */
   public async CreateCard(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
+        return res.status(400).send({ error: true, message: "Missing required fields" });
+      }
       const Card = await cardsModel.createCard(req.body);
       res.status(201).json(Card);
     } catch (e: any) {
@@ -42,6 +46,9 @@ class CardController {
    */
   public async UpdateCard(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
+        return res.status(500).send({ error: true, message: "No existe" });
+      }
       const { IdCard } = req.params;
       const newCard = await cardsModel.updateCard(req.body, IdCard);
       res.status(200).send(newCard);

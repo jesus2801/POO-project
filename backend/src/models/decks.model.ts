@@ -56,6 +56,7 @@ class DeckModel extends Model {
    * 
   */
   public async createDeck(deck: Omit<Deck, "id">): Promise<Deck> {
+
     const newDeck: Deck = {
       ...deck,
       id: v4(),

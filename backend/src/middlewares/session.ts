@@ -14,14 +14,14 @@ const checkJwt = (req: RequestExt, res: Response, next: NextFunction) => {
     const jwt = req.headers.authorization || "";
     const isUser = verifyToken(`${jwt}`) as { id: string };
     if (!isUser) {
-      res.status(401);
+      res.status(403);
       res.send("NO_TIENES_UN_JWT_VALIDO");
     } else {
       req.body.user = isUser;
       next();
     }
   } catch (e) {
-    res.status(400);
+    res.status(403);
     res.send("SESSION_NO_VALIDAD");
   }
 };

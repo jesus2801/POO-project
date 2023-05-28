@@ -28,6 +28,17 @@ class TaskModel extends Model {
   //@ts-ignore
   public async createTask(task: Omit<Task, "id" | "done">): Promise<Task> {
     //creates the new task with a unique id
+    if (
+      !task ||
+      !task.category ||
+      !task.content ||
+      !task.date ||
+      !task.userId 
+    ) {
+      const error = new Error("Datos de la sesión inválidos");
+      (error as any).statusCode = 400;
+      throw error;
+    }
     const newTask: Task = {
       ...task,
       id: v4(),
