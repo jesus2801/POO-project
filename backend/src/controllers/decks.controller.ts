@@ -5,7 +5,10 @@ import decksModel from "../models/decks.model";
 class DecksController {
   public async createDeck(req: Request, res: Response) {
     try {
-      const user = await decksModel.createDeck(req.body);
+      const user = await decksModel.createDeck({
+        ...req.body,
+        userId: req.body.user.id,
+      });
       res.status(201).send(user);
     } catch (e: any) {
       handleHttp(res, e);
