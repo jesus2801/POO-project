@@ -3,8 +3,22 @@ import { Deck } from "../interfaces/db.interface";
 import fileUtils from "../utils/file.utils";
 import Model from "./index.model";
 
+/**
+ * @class DeckModel is the class that manages the decks
+ * @extends Model
+ * @public
+ */
+
 class DeckModel extends Model {
-  //create the file if it doesn't exist
+  
+  /**
+   * @constructor create the file if it doesn't exist
+   * @param {string} file_name
+   * @param {string[]} headers
+   * @param {string} file_path
+   * @returns {void}
+   * 
+   */
   constructor() {
     super();
     this.file_name = "decks.csv";
@@ -16,8 +30,14 @@ class DeckModel extends Model {
     this.startFile();
   }
 
-  //this functions returns all decks from a user id
+  
   //@ts-ignore
+  /**
+   * 
+   * @param {string} userId
+   * @returns {Promise<Deck[]>} decks
+   * this function returns all the decks of a user
+   */
   public async getUserDecks(userId: string): Promise<Deck[]> {
     const decks: Deck[] = await fileUtils.filter(
       this.file_path + this.file_name,
@@ -27,12 +47,19 @@ class DeckModel extends Model {
     return decks;
   }
 
-  //this function creates a deck and returns it with the new setted values
   //@ts-ignore
-  public async createDeck(deck: Omit<Deck, "id", "cards">): Promise<Deck> {
+  /** 
+   * this function creates a deck and returns it with the new setted values
+   * @method createDeck
+   * @param {Omit<Deck, "id">} deck
+   * @returns {Promise<Deck>} newDeck
+   * 
+  */
+  public async createDeck(deck: Omit<Deck, "id">): Promise<Deck> {
     const newDeck: Deck = {
       ...deck,
       id: v4(),
+
     };
 
     //append the new sessions to the csv
@@ -44,8 +71,15 @@ class DeckModel extends Model {
     return newDeck;
   }
 
-  //this function updates a deck and returns it with the new setted values
+  
   //@ts-ignore
+  /**
+   * this function updates a deck and returns it with the new setted values
+   * @method updateDeck
+   * @param {Omit<Deck, "id" | "userId">} deck
+   * @param {string} id
+   * @returns  {Promise<Deck>} newDeck
+   */
   public async updateDeck(
     deck: Omit<Deck, "id" | "userId">,
     id: string

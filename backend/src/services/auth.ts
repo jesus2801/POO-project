@@ -13,7 +13,7 @@ const registerNewUser = async ({ password, name }: User) => {
     name,
   });
   const token = generateToken(registerNewUser.id, registerNewUser.name);
-  //TODO 123456
+  
   return {
     token,
     user: registerNewUser,
