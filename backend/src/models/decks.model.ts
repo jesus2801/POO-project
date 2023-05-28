@@ -30,6 +30,15 @@ class DeckModel extends Model {
   //this function creates a deck and returns it with the new setted values
   //@ts-ignore
   public async createDeck(deck: Omit<Deck, "id", "cards">): Promise<Deck> {
+    if (
+      !deck ||
+      !deck.userId ||
+      !deck.name
+    ) {
+      const error = new Error("Datos de la sesión inválidos");
+      (error as any).statusCode = 400;
+      throw error;
+    }
     const newDeck: Deck = {
       ...deck,
       id: v4(),
