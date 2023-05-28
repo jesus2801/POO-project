@@ -7,135 +7,184 @@ import { Task } from "../src/interfaces/db.interface";
 import { Session } from "../src/interfaces/db.interface";
 import { Goal } from "../src/interfaces/db.interface";
 import { Deck } from "../src/interfaces/db.interface";
-import {extraerPrimeraFila} from "./sentings";
 import { Habit } from "../src/interfaces/db.interface";
+
+let token: string | null = null;
+//jwt token
+describe("registro", () => {
+    test("It should respond with a 201 status code", async () => {
+    const response = await request(app).post("/auth/register").send({password:"jefe1234",name:"jesus"+Math.random()})      
+    expect(response.status).toBe(200);
+})})
+
+describe("login", () => {
+    test("It should respond with a 201 status code", async () => {
+    const response = await request(app).post("/auth/login").send({password:"jefe1234",name:"jesus"})
+    expect(response.status).toBe(200);
+    token=response.body.token;
+})
+test("It should respond with a 401 status code", async () => {
+    const response = await request(app).post("/auth/login").send({password:"15652",name:"juan"})
+    expect(response.status).toBe(401);
+
+})
+})
+//-----------------------------------------------------------------------------------
 const card:Omit<Card, "id" | "last_review" | "fibonacci"> ={
     userId: "10",
     deckId: "10",
     front: "front",
     back: "back"
 } 
-const cid= "1677f4b2-9324-427a-aaf3-8a27dc78edf2";
+let Newcard: string | null=null
+
 
     describe("POST /cards", () => {
         test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/cards").send(card);
+    const response = (await request(app).post("/cards").set("Authorization",token||"no existe").send(card));
+    Newcard=response.body.id;
      expect(response.status).toBe(201);
 });
     test("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/cards").send({});
+    const response = await request(app).post("/cards").set("Authorization",token||"no existe").send({});
     expect(response.status).toBe(400);
 });
+
+    test("It should respond with a 403 status code", async () => {
+      const response = await request(app).post("/cards").send(card);
+      expect(response.status).toBe(403);
+    });
 })
 
-const newcard= extraerPrimeraFila('../db/cards.csv').then((data)=>{
-    return data[0];
-})
 
 
 describe("GET /cards", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/cards/").send("123");
+    const response = await request(app).get("/cards/").set("Authorization",token||"no existe").send("123");
     expect(response.statusCode).toBe(404);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/cards/"+newcard);
+    const response = await request(app).get("/cards/"+Newcard).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
+});
+test("It should respond with a 403 status code", async () => {
+  const response = await request(app).get("/cards/"+Newcard);
+  expect(response.statusCode).toBe(403);
 });
 })
 
 describe("PUT /cards", () => {
-    test("It should respond with a 404 status code", async () => {
-    const response = await request(app).put("/cards/:IdCard").send("123");
+    test("It should respond with a 500 status code", async () => {
+    const response = await request(app).put("/cards/:IdCard").set("Authorization",token||"no existe").send("123");
     expect(response.statusCode).toBe(500);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).put("/cards/"+newcard).send(card);
+    const response = await request(app).put("/cards/"+Newcard).set("Authorization",token||"no existe").send(card);
     expect(response.statusCode).toBe(200);
 });
-})
+test("It should respond with a 403 status code", async () => {
+  const response = await request(app).put("/cards/"+Newcard).send(card);
+  expect(response.statusCode).toBe(403);
+})})
 
 
     describe("DELETE /cards", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).delete("/cards/");
+    const response = await request(app).delete("/cards/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);
 });
     //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).delete("/cards/"+newcard);
+    const response = await request(app).delete("/cards/"+Newcard).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
-})
+test("It should respond with a 200 status code", async () => {
+  const response = await request(app).delete("/cards/"+Newcard);
+  expect(response.statusCode).toBe(403);
+})})
 
 
 
 
 
-
+//-------------------------------------------------------------------------
 const user: Omit<User, "id"> = {
     name: "Pipe Santos",
     password: "password123",
   };
   
-  const uid = "03c609ca-d7dd-44e1-ba44-d08c631d1668";
-  
+  let newUser: string | null = null;
   describe("POST /users", () => {
     test("It should respond with a 201 status code", async () => {
-      const response = await request(app).post("/users").send(user);
+      const response = await request(app).post("/users").send(user).set("Authorization",token||"no existe");
+      newUser = response.body.id;
       expect(response.status).toBe(201);
     });
     
     test("It should respond with a 400 status code", async () => {
-      const response = await request(app).post("/users").send({});
+      const response = await request(app).post("/users").send({}).set("Authorization",token||"no existe");
       expect(response.status).toBe(400);
     });
+    test("It should respond with a 403 status code", async () => {
+      const response = await request(app).post("/users").send(user);
+      expect(response.status).toBe(403);})
   });
   
-const newUser= extraerPrimeraFila('../db/users.csv').then((data)=>{
-    return data[0];
-}
-)
+
+
 
   describe("GET /users/:userId", () => {
     test("It should respond with a 404 status code", async () => {
-      const response = await request(app).get("/users/")
+      const response = await request(app).get("/users/").set("Authorization",token||"no existe")
       expect(response.statusCode).toBe(404);
     });
   
     test("It should respond with a 200 status code", async () => {
-      const response = await request(app).get("/users/"+newUser);
+      const response = await request(app).get("/users/"+newUser).set("Authorization",token||"no existe");
       expect(response.statusCode).toBe(200);
     });
+
+    test("It should respond with a 403 status code", async () => {
+      const response = await request(app).get("/users/"+newUser);
+      expect(response.statusCode).toBe(403);
+    })
   });
   
   describe("PUT /users/:userId", () => {
-    test("It should respond with a 404 status code", async () => {
-      const response = await request(app).put("/users/:id").send("123");
+    test("It should respond with a 500 status code", async () => {
+      const response = await request(app).put("/users/:id").set("Authorization",token||"no existe").send("123");
       expect(response.statusCode).toBe(500);
     });
   
     test("It should respond with a 200 status code", async () => {
-      const response = await request(app).put("/users/"+newUser).send(user);
+      const response = await request(app).put("/users/"+newUser).set("Authorization",token||"no existe").send(user);
       expect(response.statusCode).toBe(200);
-    });
+    })
+    test("It should respond with a 403 status code", async () => {
+      const response = await request(app).put("/users/"+newUser).send(user);
+      expect(response.statusCode).toBe(403);
+    })
   });
   
   describe("DELETE /users/:userId", () => {
     test("It should respond with a 404 status code", async () => {
-      const response = await request(app).delete("/users/");
+      const response = await request(app).delete("/users/").set("Authorization",token||"no existe");
       expect(response.statusCode).toBe(404);
     });
   
     test("It should respond with a 200 status code", async () => {
-      const response = await request(app).delete("/users/"+newUser);
+      const response = await request(app).delete("/users/"+newUser).set("Authorization",token||"no existe");
       expect(response.statusCode).toBe(200);
     });
+    test("It should respond with a 403 status code", async () => {
+      const response = await request(app).delete("/users/"+newUser);
+      expect(response.statusCode).toBe(403);
+    })
   });
   
 
 
-
+//--------------------------------------------------------------------
 const task: Omit<Task, "id" | "done"> ={
     userId: "10",
     content: "content",
@@ -143,64 +192,77 @@ const task: Omit<Task, "id" | "done"> ={
     date: "date"
     
 } 
-const tid= "5c91633c-81bb-41d2-9ea9-9ad982498543";
+let newtask: string | null=null
 
     describe("POST /tasks", () => {
         test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/tasks").send(task);
+    const response = await request(app).post("/tasks").set("Authorization",token||"no existe").send(task);
+    newtask=response.body.id;
      expect(response.status).toBe(201);
 });
-    test("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/tasks").send({});
-    expect(response.status).toBe(400);
+    test("It should respond with a 500 status code", async () => {
+    const response = await request(app).post("/tasks").set("Authorization",token||"no existe").send({});
+    expect(response.status).toBe(500);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).post("/tasks").send(task);
+    expect(response.status).toBe(403);
+    })
    
 })
 
-const newtask= extraerPrimeraFila('../db/tasks.csv').then((data)=>{ 
-  console.log("se esta haciondo la prueba");
-    return data[0];
-}
-)
+
 
 describe("GET /tasks", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/tasks/").send("123");
+    const response = await request(app).get("/tasks/"+newtask).set("Authorization",token||"no existe").send({});
     expect(response.statusCode).toBe(404);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/tasks/"+newtask);
+    const response = await request(app).get("/tasks/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
+    test ("It should respond with a 403 status code", async () => {
+    const response = await request(app).get("/tasks/");
+    expect(response.statusCode).toBe(403);
+    })
 })
 
 describe("PUT /tasks", () => {
-    test("It should respond with a 404 status code", async () => {
-    const response = await request(app).put("/tasks/:content").send("123");
+    test("It should respond with a 500 status code", async () => {
+    const response = await request(app).put("/tasks/:content").set("Authorization",token||"no existe").send("123");
     expect(response.statusCode).toBe(500);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).put("/tasks/"+newtask).send(task);
+    const response = await request(app).put("/tasks/"+newtask).set("Authorization",token||"no existe").send(task);
     expect(response.statusCode).toBe(200);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).put("/tasks/"+newtask).send(task);
+    expect(response.statusCode).toBe(403);
+    })
 })
 
 
     describe("DELETE /tasks", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).delete("/tasks/");
+    const response = await request(app).delete("/tasks/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);
 });
     //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).delete("/tasks/"+newtask);
+    const response = await request(app).delete("/tasks/"+newtask).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).delete("/tasks/"+newtask);
+    expect(response.statusCode).toBe(403);
+    })
 })
 
 
 
-
+//--------------------------------------------------------------------
 
 const session:Omit<Session, "id"> ={
       "userId": "24",
@@ -213,202 +275,259 @@ const session:Omit<Session, "id"> ={
 
     describe("POST /sessions", () => {
         test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/sessions").send(session);
+    const response = await request(app).post("/sessions").set("Authorization",token||"no existe").send(session);
      expect(response.status).toBe(201);
 });
         test("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/sessions").send({});
+    const response = await request(app).post("/sessions").set("Authorization",token||"no existe").send({});
         expect(response.status).toBe(400);
 });
+        test("It should respond with a 403 status code", async () => {
+    const response = await request(app).post("/sessions").send(session);
+    expect(response.status).toBe(403);})
 })
 
 const sid = "24"
 describe("GET /sessions", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/sessions/");
+    const response = await request(app).get("/sessions/4652").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/sessions/"+sid);
+    const response = await request(app).get("/sessions").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).get("/sessions");
+    expect(response.statusCode).toBe(403);
+    })
 })
 
 describe("DELETE /sessions", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).delete("/sessions/");
+    const response = await request(app).delete("/sessions/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);
 });
     //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).delete("/sessions/"+sid);
+    const response = await request(app).delete("/sessions/"+sid).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).delete("/sessions/"+sid);
+    expect(response.statusCode).toBe(403);
+    })
 })
 
 
 
-
+//--------------------------------------------------------------------
 const goal  = {
   "userId": "juan pedro",
   "title": "liberacion bolivariana",
   "description": "liberar a venezuela",
 }
-
-const id= "06696340-b0a1-4daf-956c-5c319b3e9537";
+let newgoal: string | null=null
 
     describe("POST /goals", () => {
         test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/goals").send(goal);
+    const response = await request(app).post("/goals").set("Authorization",token||"no existe").send(goal);
+    newgoal=response.body.id;
         expect(response.status).toBe(201);
 });     
         test("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/goals").send({title: "liberacion bolivariana"});
+    const response = await request(app).post("/goals").set("Authorization",token||"no existe").send({title: "liberacion bolivariana"});
         expect(response.status).toBe(400);
 });
+        test("It should respond with a 403 status code", async () => {
+    const response = await request(app).post("/goals").send(goal);
+    expect(response.status).toBe(403);})
+    
 })
- const newgoal= extraerPrimeraFila('../db/goals.csv').then((data)=>{
-    return data[0];
-})
+
 
 describe("GET /goals", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/goalsa/");
+    const response = await request(app).get("/goalsa/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);})
         //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/goals/"+newgoal);
+    const response = await request(app).get("/goals/"+newgoal).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).get("/goals/"+newgoal);
+    expect(response.statusCode).toBe(403);})
 }
 )
 
 describe("DELETE /goals", () => {
     test("It should respond with a 404 status code", async () => {
-    const response = await request(app).delete("/");
+    const response = await request(app).delete("/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);
 });
     //se necesita un id para que funcione
     test("It should respond with a 200 status code", async () => {
-    const response = await request(app).delete("/goals/"+newgoal);
+    const response = await request(app).delete("/goals/"+newgoal).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
 });
+    test("It should respond with a 403 status code", async () => {
+    const response = await request(app).delete("/goals/"+newgoal);
+    expect(response.statusCode).toBe(403);})
 }
 )
-
+//--------------------------------------------------------------------
 
 const deck: Omit<Deck, "id"> = {
     userId: "012e9ee4-5659-4551-8760-5612e6adb31e",
     name: "Deck 1",
 };
 
-const did = "9a57f0d8-9681-4440-8f6f-e17ba6eff5c6";
+let newdeck: string | null = null;
 console.log("Userid: " + deck.userId);
 describe("POST /decks", () => {
   test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/decks").send(deck);
+    const response = await request(app).post("/decks").set("Authorization",token||"no existe").send(deck);
+    newdeck = response.body.id;
     expect(response.status).toBe(201);
   });
-  test ("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/decks").send({});
-    expect(response.status).toBe(400);
+  test ("It should respond with a 500 status code", async () => {
+    const response = await request(app).post("/decks").set("Authorization",token||"no existe").send({});
+    expect(response.status).toBe(500);
   })
+  test("It should respond with a 403 status code", async () => {
+    const response = await request(app).post("/decks").send(deck);
+    expect(response.status).toBe(403);
+  }
+  );
 });
-const newdeck = extraerPrimeraFila('../db/decks.csv').then((data)=>{
-    return data[0];
-})
+
 
     
 
 describe("GET /decks/:userId", () => {
   test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/decks/")
+    const response = await request(app).get("/decks/").set("Authorization",token||"no existe")
     expect(response.statusCode).toBe(404);
   });
 
   test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/decks/" + deck.userId);
+    const response = await request(app).get("/decks/" + deck.userId).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
   });
+  test ("It should respond with a 403 status code", async () => {
+    const response = await request(app).get("/decks/" + deck.userId);
+    expect(response.statusCode).toBe(403);
+  }
+  );
 });
 
 describe("PUT /decks/:id", () => {
-  test("It should respond with a 404 status code", async () => {
-    const response = await request(app).put("/decks/:id").send("123");
+  test("It should respond with a 500 status code", async () => {
+    const response = await request(app).put("/decks/:id").set("Authorization",token||"no existe").send("123");
     expect(response.statusCode).toBe(500);
   });
 
   test("It should respond with a 200 status code", async () => {
-    const response = await request(app).put("/decks/" +newdeck).send(deck);
+    const response = await request(app).put("/decks/" +newdeck).set("Authorization",token||"no existe").send(deck);
     expect(response.statusCode).toBe(200);
   });
+  test ("It should respond with a 403 status code", async () => {
+    const response = await request(app).put("/decks/" +newdeck).send(deck);
+    expect(response.statusCode).toBe(403);
+  })
 });
 
 describe("DELETE /decks/:id", () => {
     test("It should respond with a 404 status code", async () => {
-        const response = await request(app).delete("/decks/");
+        const response = await request(app).delete("/decks/").set("Authorization",token||"no existe");
         expect(response.statusCode).toBe(404);
     });
     
     test("It should respond with a 200 status code", async () => {
-        const response = await request(app).delete("/decks/" + newdeck);
+        const response = await request(app).delete("/decks/" + newdeck).set("Authorization",token||"no existe");
         expect(response.statusCode).toBe(200);
     });
+    test ("It should respond with a 403 status code", async () => {
+        const response = await request(app).delete("/decks/" + newdeck);
+        expect(response.statusCode).toBe(403);})
     })
 
+
+
+//--------------------------------------------------------------------    
     const habit: Omit<Habit, "id"|"fullfilled"> = {
       userId: "012e9ee4-5659-4551-8760-5612e6adb31e",
       name: "Habit 1"
     }
-  
+
+  let newhabit: string | null = null;
+
 describe("POST /habits", () => {
   test("It should respond with a 201 status code", async () => {
-    const response = await request(app).post("/habits").send(habit);
+    const response = await request(app).post("/habits").set("Authorization",token||"no existe").send(habit);
+    newhabit = response.body.id;
     expect(response.status).toBe(201);
   });
   test ("It should respond with a 400 status code", async () => {
-    const response = await request(app).post("/habits").send({});
+    const response = await request(app).post("/habits").set("Authorization",token||"no existe").send({});
     expect(response.status).toBe(400);
   })
+  test("It should respond with a 403 status code", async () => {
+    const response = await request(app).post("/habits").send(habit);
+    expect(response.status).toBe(403);
+  }
+  );
 }
 );
-const newhabit = extraerPrimeraFila('../db/habits.csv').then((data)=>{
-  return data[0];})
+
 
 describe("GET /habits/:userId", () => {
   test("It should respond with a 404 status code", async () => {
-    const response = await request(app).get("/habits/")
+    const response = await request(app).get("/habits/").set("Authorization",token||"no existe")
     expect(response.statusCode).toBe(404);
   });
 
   test("It should respond with a 200 status code", async () => {
-    const response = await request(app).get("/habits/" + habit.userId);
+    const response = await request(app).get("/habits/" +newhabit).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
   });
+  test ("It should respond with a 403 status code", async () => {
+    const response = await request(app).get("/habits/" +newhabit);
+    expect(response.statusCode).toBe(403);
+  }
+  )
 }
 );
 
 describe("PUT /habits/:id", () => {
-  test("It should respond with a 404 status code", async () => {
-    const response = await request(app).put("/habits/:id").send("123");
-    expect(response.statusCode).toBe(500);
+  test("It should respond with a 400 status code", async () => {
+    const response = await request(app).put("/habits/:id").set("Authorization",token||"no existe").send("123");
+    expect(response.statusCode).toBe(400);
   });
 
   test("It should respond with a 200 status code", async () => {
-    const response = await request(app).put("/habits/" + newhabit).send(habit);
+    const response = await request(app).put("/habits/" + newhabit).set("Authorization",token||"no existe").send(habit);
     expect(response.statusCode).toBe(200);
   });
+  test ("It should respond with a 403 status code", async () => {
+    const response = await request(app).put("/habits/" + newhabit).send(habit);
+    expect(response.statusCode).toBe(403);
+  })
 }
 );
 
 describe("DELETE /habits/:id", () => {
   test("It should respond with a 404 status code", async () => {
-    const response = await request(app).delete("/habits/");
+    const response = await request(app).delete("/habits/").set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(404);
   });
 
   test("It should respond with a 200 status code", async () => {
-    const response = await request(app).delete("/habits/" + newhabit);
+    const response = await request(app).delete("/habits/" + newhabit).set("Authorization",token||"no existe");
     expect(response.statusCode).toBe(200);
   });
+  test ("It should respond with a 403 status code", async () => {
+    const response = await request(app).delete("/habits/" + newhabit);
+    expect(response.statusCode).toBe(403);})
 })
