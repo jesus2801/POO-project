@@ -22,6 +22,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import Link from "next/link";
 import { NextPage } from "next";
+import AppLayout from "@/components/AppLayout";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -123,7 +124,7 @@ const Home: NextPage = () => {
   }, [tasks]);
 
   return (
-    <>
+    <AppLayout>
       <div className={styles.header}>
         <p>{date}</p>
       </div>
@@ -242,7 +243,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-    </>
+    </AppLayout>
   );
 };
 
