@@ -79,11 +79,11 @@ export function obtainInfo(
               d.setSeconds(0);
               d.setMinutes(0);
               d.setHours(0);
-              console.log(str)
+              console.log(str);
               d.setDate(parseInt(str[2]) + 1);
               d.setMonth(parseInt(str[1]) - 1);
               d.setFullYear(parseInt(str[0]));
-              console.log(d)
+              console.log(d);
               response[input[i].name] = d;
             }
           }

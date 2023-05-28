@@ -17,7 +17,6 @@ export interface Goal {
 export interface Session {
   id: string;
   userId: string;
-  duration: string; // HH:MM:SS format
   reviewed_cards: number; //number of cards reviewed
   reached_goals: number; //number of goals achieved after finishinng the session
   initDate: Date;

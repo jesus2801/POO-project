@@ -5,11 +5,11 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import "./default.styles.css";
 import { ChangeEvent, useState } from "react";
-import { client } from "../../../config/axios.config";
-import { loading, showMessage } from "../../../utils/alerts";
-import { translateError } from "../../../config/messages";
+import { client } from "../../config/axios.config";
+import { loading, showMessage } from "../../utils/alerts";
+import { translateError } from "../../config/messages";
 import { useRouter } from "next/navigation";
-import { updateToken } from "../../../config/axios.config";
+import { updateToken } from "../../config/axios.config";
 
 const Login: NextPage = () => {
   const router = useRouter();

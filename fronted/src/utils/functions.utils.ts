@@ -10,11 +10,11 @@ export const dueDate = (date: Date): string => {
   return `${d} ${d <= 1 ? "día" : "días"}`;
 };
 
-export const parseSessionsStatistics = (
-  sessions: Session[]
-): [string[], number[]] => {
+export const parseSessionsStatistics = (s: Session[]): [string[], number[]] => {
   const labels = [];
   const data = [];
+  const sessions = [...s];
+  sessions.reverse();
   let current2 = convertToHalf(sessions[0].endDate);
   for (let i = 0, n = sessions.length; i < n; i++) {
     console.log("----");
@@ -67,7 +67,7 @@ function convertToHalf(date: Date) {
   return d;
 }
 
-function twoDigits(number: number) {
+export function twoDigits(number: number) {
   return number < 10 ? "0" + number : number;
 }
 

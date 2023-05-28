@@ -5,12 +5,12 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { BackendTask, Session, Task } from "../../config/interfaces.config";
-import { client } from "../../config/axios.config";
+import { BackendTask, Session, Task } from "../config/interfaces.config";
+import { client } from "../config/axios.config";
 import { AxiosResponse } from "axios";
-import TaskComponent from "../../components/Task.component";
-import { loading, obtainInfo } from "../../utils/alerts";
-import { dueDate, parseSessionsStatistics } from "../../utils/functions.utils";
+import TaskComponent from "../components/Task.component";
+import { loading, obtainInfo } from "../utils/alerts";
+import { dueDate, parseSessionsStatistics } from "../utils/functions.utils";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,6 +22,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import Link from "next/link";
 import { NextPage } from "next";
+import AppLayout from "@/components/AppLayout";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -123,7 +124,7 @@ const Home: NextPage = () => {
   }, [tasks]);
 
   return (
-    <>
+    <AppLayout>
       <div className={styles.header}>
         <p>{date}</p>
       </div>
@@ -242,7 +243,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-    </>
+    </AppLayout>
   );
 };
 
