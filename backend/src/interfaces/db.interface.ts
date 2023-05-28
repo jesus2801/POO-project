@@ -1,12 +1,20 @@
 import { JwtPayload } from "jsonwebtoken";
 import { Request } from "express";
 
+/**
+ * @interface User
+ * @description this interface is the schema for the user model
+ */
 export interface User {
   id: string;
   name: string;
   password: string; //user password
 }
 
+/**
+ * @interface Goal
+ * @description this interface is the schema for the goal model
+ */
 export interface Goal {
   id: string;
   userId: string;
@@ -19,6 +27,11 @@ export interface Goal {
   title: string;
 }
 
+/**
+ * @interface Session
+ * @description this interface is the schema for the session model  
+ */
+
 export interface Session {
   id: string;
   userId: string;
@@ -28,6 +41,10 @@ export interface Session {
   endDate: string;
 }
 
+/**
+ * @interface Card
+ * @description this interface is the schema for the card model
+ */
 export interface Card {
   id: string;
   userId: string;
@@ -38,6 +55,10 @@ export interface Card {
   fibonacci: number;
 }
 
+/**
+ * @interface Task
+ * @description this interface is the schema for the task model
+ */
 export interface Task {
   id: string;
   userId: string;
@@ -47,24 +68,37 @@ export interface Task {
   date: string;
 }
 
+/**
+ * @interface Deck
+ * @description this interface is the schema for the deck model
+ */
 export interface Deck {
   id: string;
   userId: string;
   name: string;
 }
 
+/**
+ * @interface MasterConfig
+ */
 export interface MasterConfig {
   /**
    * Cluster principal
    */
   cluster: any;
 }
-
+/**
+ * @interface Auth
+ * @description this interface is the schema for the auth model
+ */
 export interface Auth {
   name: string;
   password: string;
 }
-
+/**
+ * @interface Habit
+ * @description this interface is the schema for the habit model
+ */
 export interface Habit {
   name: string;
   id: string;
@@ -103,6 +137,11 @@ export interface Habit {
     boolean
   ];
 }
+
+/**
+ * @interface RequestExt
+ * @description this interface extends the Request interface from express
+ */
 
 export interface RequestExt extends Request {
   user?: JwtPayload | { id: string };

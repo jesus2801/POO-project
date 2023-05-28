@@ -3,6 +3,11 @@ import goalsModel from "../models/goals.model";
 import { handleHttp } from "../utils/error.handle";
 import { isEmpty } from "../utils/validation.utils";
 
+/**
+   * @class GoalController
+   * @description this class is the controller for the goals route
+   */
+
 class GoalController {
   public async GetUserGoals(req: Request, res: Response) {
     try {
@@ -13,6 +18,13 @@ class GoalController {
       handleHttp(res, e);
     }
   }
+
+  /**
+   * this function is the controller for the create goal route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
 
   public async CreateGoal(req: Request, res: Response) {
     try {
@@ -25,6 +37,13 @@ class GoalController {
       res.status(400).send({ error: true, message: e.message });
     }
   }
+
+  /**
+   * this function is the controller for the delete goal route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
 
   public async DeleteGoal(req: Request, res: Response) {
     try {

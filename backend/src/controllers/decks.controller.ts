@@ -3,6 +3,11 @@ import { handleHttp } from "../utils/error.handle";
 import decksModel from "../models/decks.model";
 import { isEmpty } from "../utils/validation.utils";
 
+/**
+   * @class DecksController
+   * @description this class is the controller for the decks route
+   * @public
+   */
 class DecksController {
   public async createDeck(req: Request, res: Response) {
     try {
@@ -16,6 +21,13 @@ class DecksController {
     }
   }
 
+  /**
+   * this function is the controller for the get decks route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
+
   public async getDecks(req: Request, res: Response) {
     try {
       const { userId } = req.params;
@@ -25,6 +37,13 @@ class DecksController {
       handleHttp(res, e);
     }
   }
+
+  /**
+   * this function is the controller for the update decks route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
 
   public async updateDeck(req: Request, res: Response) {
     try {
@@ -38,6 +57,13 @@ class DecksController {
       handleHttp(res, e);
     }
   }
+
+  /**
+   * this function is the controller for the delete decks route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
 
   public async deleteDeck(req: Request, res: Response) {
     try {

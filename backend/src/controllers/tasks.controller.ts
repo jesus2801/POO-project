@@ -4,7 +4,18 @@ import tasksModel from "../models/tasks.model";
 import { User } from "../interfaces/db.interface";
 import { isEmpty } from "../utils/validation.utils";
 
+/**
+ * @class TasksController
+ * @description this class is the controller for the tasks route
+ */
 class TasksController {
+  /**
+   * @description this function is the controller for the create task route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+   */
   public async createTask(req: Request, res: Response) {
     try {
       if (isEmpty(req.body, ["userId", "content", "category", "date"])) {
@@ -19,6 +30,13 @@ class TasksController {
       handleHttp(res, e);
     }
   }
+  /**
+   * @description this function is the controller for the get user tasks route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+   */
 
   public async getTasks(req: Request<{}, {}, { user: User }>, res: Response) {
     try {
@@ -28,6 +46,13 @@ class TasksController {
       handleHttp(res, e);
     }
   }
+  /**
+   * @description this function is the controller for the update task route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+   */
 
   public async updateTask(req: Request, res: Response) {
     try {
@@ -41,6 +66,13 @@ class TasksController {
       handleHttp(res, e);
     }
   }
+  /**
+   * @description this function is the controller for the delete task route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+   */
 
   public async deleteTask(req: Request, res: Response) {
     try {

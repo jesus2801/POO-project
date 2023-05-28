@@ -3,6 +3,11 @@ import cardsModel from "../models/cards.model";
 import { handleHttp } from "../utils/error.handle";
 import { isEmpty } from "../utils/validation.utils";
 
+/**
+ * 
+ * @class CardController
+ * @description this class is the controller for the cards route
+ */
 class CardController {
   public async GetDeck(req: Request, res: Response) {
     try {
@@ -14,6 +19,12 @@ class CardController {
     }
   }
 
+  /**
+   * this function is the controller for the create card route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
   public async CreateCard(req: Request, res: Response) {
     try {
       if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
@@ -27,6 +38,12 @@ class CardController {
     }
   }
 
+  /**
+   * this function is the controller for the update card route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
   public async UpdateCard(req: Request, res: Response) {
     try {
       if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
@@ -40,6 +57,12 @@ class CardController {
     }
   }
 
+  /**
+   * this function is the controller for the delete card route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
   public async DeleteCard(req: Request, res: Response) {
     try {
       const { IdCard } = req.params;

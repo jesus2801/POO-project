@@ -3,7 +3,19 @@ import sessionsModel from "../models/sessions.model";
 import { handleHttp } from "../utils/error.handle";
 import { isEmpty } from "../utils/validation.utils";
 
+/**
+ * @class SessionsController
+ * @description this class is the controller for the sessions route
+ * @public
+ */
 class SessionsController {
+  /**
+   * @description this function is the controller for the create session route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+   */
   public async createSession(req: Request, res: Response) {
     try {
       if (isEmpty(req.body, ["userId", "initDate", "endDate"] )) {
@@ -19,6 +31,13 @@ class SessionsController {
     }
   }
 
+  /**
+   * @description this function is the controller for the get user sessions route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+     */
   public async getUserSessions(req: Request, res: Response) {
     try {
       const sessions = await sessionsModel.getUserSessions(req.body.user.id);
@@ -27,6 +46,13 @@ class SessionsController {
       handleHttp(res, e);
     }
   }
+  /**
+   * @description this function is the controller for the delete session route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
+
 
   public async deleteSession(req: Request, res: Response) {
     try {
