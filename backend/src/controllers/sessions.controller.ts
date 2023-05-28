@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
 import sessionsModel from "../models/sessions.model";
 import { handleHttp } from "../utils/error.handle";
+import { isEmpty } from "../utils/validation.utils";
 
 class SessionsController {
   public async createSession(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["userId", "initDate", "endDate"] )) {
+        return res.status(400).send({ error: true, message: "Missing required fields" });
+      }
       const session = await sessionsModel.createSession({
         ...req.body,
         userId: req.body.user.id,

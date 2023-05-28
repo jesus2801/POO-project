@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import goalsModel from "../models/goals.model";
 import { handleHttp } from "../utils/error.handle";
+import { isEmpty } from "../utils/validation.utils";
 
 class GoalController {
   public async GetUserGoals(req: Request, res: Response) {
@@ -15,6 +16,9 @@ class GoalController {
 
   public async CreateGoal(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["userId","description", "title"])) {
+        return res.status(400).send({ error: true, message: "Missing required fields" });
+      }
       const goal = await goalsModel.createGoal(req.body);
       res.status(201).send(goal);
     } catch (e: any) {
