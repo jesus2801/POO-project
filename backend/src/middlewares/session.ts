@@ -1,7 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { RequestExt } from "../interfaces/db.interface";
 import { verifyToken } from "../utils/jwt.handle";
-
+/**
+ * @description this function is the middleware for the session
+ * @param {RequestExt} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<void>}
+ *  
+ */
 const checkJwt = (req: RequestExt, res: Response, next: NextFunction) => {
   try {
     const jwt = req.headers.authorization || "";

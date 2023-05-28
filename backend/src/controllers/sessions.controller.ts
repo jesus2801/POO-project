@@ -2,7 +2,19 @@ import { Request, Response } from "express";
 import sessionsModel from "../models/sessions.model";
 import { handleHttp } from "../utils/error.handle";
 
+/**
+ * @class SessionsController
+ * @description this class is the controller for the sessions route
+ * @public
+ */
 class SessionsController {
+  /**
+   * @description this function is the controller for the create session route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+   */
   public async createSession(req: Request, res: Response) {
     try {
       const session = await sessionsModel.createSession({
@@ -15,6 +27,13 @@ class SessionsController {
     }
   }
 
+  /**
+   * @description this function is the controller for the get user sessions route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   * 
+     */
   public async getUserSessions(req: Request, res: Response) {
     try {
       const sessions = await sessionsModel.getUserSessions(req.body.user.id);
@@ -23,6 +42,13 @@ class SessionsController {
       handleHttp(res, e);
     }
   }
+  /**
+   * @description this function is the controller for the delete session route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
+
 
   public async deleteSession(req: Request, res: Response) {
     try {

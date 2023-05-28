@@ -35,8 +35,7 @@ class CardModel extends Model {
   
   //@ts-ignore
   /**
-   * this function returns all the cards of a deck by its id
-
+   * @description this function returns all the cards of a deck by its id
    * @method getDeckCards
    * @param {<string>} id
    * @returns {Promise<Card[]>} 
