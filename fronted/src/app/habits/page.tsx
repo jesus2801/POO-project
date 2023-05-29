@@ -9,6 +9,7 @@ import { client } from "@/config/axios.config";
 import { Habit } from "@/config/interfaces.config";
 import HabitComponent from "@/components/Habit/Habit.component";
 import Image from "next/image";
+import Return from "@/components/Return/Return";
 
 const opt: Intl.DateTimeFormatOptions = {
   day: "numeric",
@@ -62,6 +63,7 @@ const habits = () => {
 
   return (
     <AppLayout>
+      <Return />
       <div className={styles.main}>
         <div className={styles.container}>
           <Image

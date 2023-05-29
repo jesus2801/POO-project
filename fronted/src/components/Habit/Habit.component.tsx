@@ -27,6 +27,22 @@ const Habit = ({ habit, setHabits, habits }: HabitProps) => {
     });
     loading(false);
 
+    setHabits(
+      //@ts-ignore
+      habits.map((h) => {
+        //@ts-ignore
+        if (h.id == habit.id) {
+          //@ts-ignore
+          return {
+            //@ts-ignore
+            ...habit,
+            //@ts-ignore
+            fullfilled: newDays,
+          };
+        }
+        return h;
+      })
+    );
     t!.classList.toggle("checked");
   };
 

@@ -47,16 +47,20 @@ const Home: NextPage = () => {
   const [title, setTitle] = useState("");
 
   const getTasks = async () => {
-    const response: AxiosResponse<BackendTask[]> = await client.get("/tasks");
-    setTasks(
-      response.data.map((task) => {
-        return {
-          ...task,
-          done: task.done === "true",
-          date: new Date(task.date),
-        };
-      })
-    );
+    try {
+      const response: AxiosResponse<BackendTask[]> = await client.get("/tasks");
+      setTasks(
+        response.data.map((task) => {
+          return {
+            ...task,
+            done: task.done === "true",
+            date: new Date(task.date),
+          };
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const addTask = async () => {
