@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import goalsModel from "../models/goals.model";
 import { handleHttp } from "../utils/error.handle";
+import { isEmpty } from "../utils/validation.utils";
+
+/**
+   * @class GoalController
+   * @description this class is the controller for the goals route
+   */
 
 class GoalController {
   public async GetUserGoals(req: Request, res: Response) {
@@ -13,14 +19,31 @@ class GoalController {
     }
   }
 
+  /**
+   * this function is the controller for the create goal route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
+
   public async CreateGoal(req: Request, res: Response) {
     try {
+      if (isEmpty(req.body, ["userId","description", "title"])) {
+        return res.status(400).send({ error: true, message: "Missing required fields" });
+      }
       const goal = await goalsModel.createGoal(req.body);
       res.status(201).send(goal);
     } catch (e: any) {
       res.status(400).send({ error: true, message: e.message });
     }
   }
+
+  /**
+   * this function is the controller for the delete goal route
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
 
   public async DeleteGoal(req: Request, res: Response) {
     try {

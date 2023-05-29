@@ -3,8 +3,20 @@ import fileUtils from "../utils/file.utils";
 import { v4 } from "uuid";
 import Model from "./index.model";
 
+
+/**
+ * @class CardModel is the class that manages the cards
+ * @extends Model
+ * @public
+ * @version 1.0.0
+ * 
+ */
+
 class CardModel extends Model {
-  //create the file if it doesn't exist
+  /**
+   * create the file if it doesn't exist
+   * @constructor
+   */
   constructor() {
     super();
     this.file_name = "cards.csv";
@@ -20,8 +32,15 @@ class CardModel extends Model {
     this.startFile();
   }
 
-  //this functions returns all cards from a deck id
+  
   //@ts-ignore
+  /**
+   * @description this function returns all the cards of a deck by its id
+   * @method getDeckCards
+   * @param {<string>} id
+   * @returns {Promise<Card[]>} 
+   * 
+   */
   public async getDeckCards(deckId: string): Promise<Card[]> {
     const cards: Card[] = await fileUtils.filter(
       this.file_path + this.file_name,
@@ -31,10 +50,15 @@ class CardModel extends Model {
     return cards;
   }
 
-  //this function creates a card and returns it with the new setted values:
-  //last_review = current date of creation
-  //fibonacci = 0
   //@ts-ignore
+  /**
+   * 
+   * @param {Omit<Card, "id" | "last_review" | "fibonacci">} card
+   * @returns {Promise<Card>} newCard
+   * this function creates a card and returns it with the new setted values:
+   * last_review = current date of creation
+   * fibonacci = 0 
+   */
   public async createCard(
     card: Omit<Card, "id" | "last_review" | "fibonacci">
   ): Promise<Card> {
@@ -51,7 +75,8 @@ class CardModel extends Model {
       fibonacci: 0,
     };
 
-    //append the new sessions to the csv
+    /** append the new sessions to the csv */
+    
     await fileUtils.append(
       [newCard],
       this.file_path + this.file_name,
@@ -60,8 +85,14 @@ class CardModel extends Model {
     return newCard;
   }
 
-  //this function updates a card and returns it with the new setted values
   //@ts-ignore
+  /**
+   * @method updateCard
+   * this function updates a card and returns it with the new setted values
+   * @param {Omit<Card, "id" | "userId">} card
+   * @param {<string>} id
+   * @returns {Promise<Card>} newCard
+   */
   public async updateCard(
     card: Omit<Card, "id" | "userId">,
     id: string
@@ -89,5 +120,9 @@ class CardModel extends Model {
     return newCard;
   }
 }
-
+/** 
+ * @constant cardModel
+ * @type {CardModel}
+ * @public
+ */
 export default new CardModel();
