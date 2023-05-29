@@ -44,6 +44,7 @@ const Home: NextPage = () => {
   const [labels, setLabels] = useState<string[]>([]);
   const [data, setData] = useState<number[]>([]);
   const [quote, setQuote] = useState("");
+  const [title, setTitle] = useState("");
 
   const getTasks = async () => {
     const response: AxiosResponse<BackendTask[]> = await client.get("/tasks");
@@ -98,9 +99,10 @@ const Home: NextPage = () => {
     });
 
     if (sessions.length > 0) {
-      const [l, d] = parseSessionsStatistics(sessions);
+      const [l, d, t] = parseSessionsStatistics(sessions);
       setLabels(l);
       setData(d);
+      setTitle(t.toLocaleDateString("es-ES", opt));
     }
   };
 
@@ -181,7 +183,7 @@ const Home: NextPage = () => {
                 labels: labels,
                 datasets: [
                   {
-                    label: "Últimas horas de estudio",
+                    label: title,
                     data: data,
                     backgroundColor: "#F9AEAE",
                   },

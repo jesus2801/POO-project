@@ -6,7 +6,17 @@ import { loading, obtainInfo, showMessage } from "@/utils/alerts";
 import { Deck } from "@/config/interfaces.config";
 import { ContextMenu, ContextMenuTrigger, MenuItem } from "react-contextmenu";
 
-const Decks = () => {
+interface Props {
+  setSelectedDeck: (d: Deck | null) => void;
+  selectedDeck: Deck | null;
+  layout?: "horizontal" | "vertical";
+}
+
+const Decks = ({
+  setSelectedDeck,
+  selectedDeck,
+  layout = "horizontal",
+}: Props) => {
   const [decks, setDecks] = useState<Deck[]>([]);
 
   const getDecks = async () => {
@@ -39,12 +49,66 @@ const Decks = () => {
     }
   };
 
+  const updateDeck = async (deck: Deck) => {
+    try {
+      const info = await obtainInfo(
+        [
+          {
+            label: "Nombre del mazo",
+            name: "name",
+            type: "text",
+          },
+        ],
+        "Modificar mazo",
+        "Modificar"
+      );
+
+      loading(true);
+      const response = await client.put(`/decks/${deck.id}`, info);
+      loading(false);
+
+      setDecks(
+        decks.map((d) => {
+          if (deck.id === d.id) return response.data;
+          return d;
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const deleteDeck = async (deck: Deck) => {
+    loading(true);
+    await client.delete(`/decks/${deck.id}`);
+    loading(false);
+
+    if (selectedDeck && selectedDeck.id === deck.id) {
+      setSelectedDeck(null);
+    }
+    setDecks(decks.filter((d) => deck.id !== d.id));
+
+    showMessage("Mazo eliminado correctamente", "success");
+  };
+
+  const onDeckClick = (deck: Deck) => {
+    if (selectedDeck && selectedDeck.id === deck.id) {
+      showMessage("El mazo ya está seleccionado", "error");
+    } else {
+      setSelectedDeck(deck);
+    }
+  };
+
   useEffect(() => {
     getDecks();
   }, []);
 
   return (
-    <div className={styles.decks}>
+    <div
+      className={`${styles.decks} ${
+        layout === "vertical" ? styles.vertical : ""
+      }`}
+    >
       <Image
         width={45}
         height={45}
@@ -54,27 +118,25 @@ const Decks = () => {
         className={styles.add}
       />
       {decks.map((deck) => (
-        <>
+        // @ts-ignore
+        <ContextMenuTrigger key={deck.id} id={deck.id}>
           {/*@ts-ignore*/}
-          <ContextMenuTrigger id={deck.id}>
+          <ContextMenu id={deck.id}>
             {/*@ts-ignore*/}
-            <ContextMenu id={deck.id}>
-              {/*@ts-ignore*/}
-              <MenuItem>Actualizar</MenuItem>
-              {/*@ts-ignore*/}
-              <MenuItem>Eliminar</MenuItem>
-            </ContextMenu>
-            <div key={deck.id} className={styles.deck}>
-              <Image
-                src="/decks/folder.svg"
-                width={85}
-                height={69}
-                alt="carpeta"
-              />
-              <p>{deck.name}</p>
-            </div>
-          </ContextMenuTrigger>
-        </>
+            <MenuItem onClick={() => updateDeck(deck)}>Actualizar</MenuItem>
+            {/*@ts-ignore*/}
+            <MenuItem onClick={() => deleteDeck(deck)}>Eliminar</MenuItem>
+          </ContextMenu>
+          <div onClick={() => onDeckClick(deck)} className={styles.deck}>
+            <Image
+              src="/decks/folder.svg"
+              width={85}
+              height={69}
+              alt="carpeta"
+            />
+            <p>{deck.name}</p>
+          </div>
+        </ContextMenuTrigger>
       ))}
     </div>
   );

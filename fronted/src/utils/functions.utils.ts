@@ -11,12 +11,15 @@ export const dueDate = (date: Date): string => {
   return `${d} ${d <= 1 ? "día" : "días"}`;
 };
 
-export const parseSessionsStatistics = (s: Session[]): [string[], number[]] => {
+export const parseSessionsStatistics = (
+  s: Session[]
+): [string[], number[], Date] => {
   const labels = [];
   const data = [];
   const sessions = [...s];
   sessions.reverse();
   let current2 = convertToHalf(sessions[0].endDate);
+  const title = sessions[0].endDate;
   for (let i = 0, n = sessions.length; i < n; i++) {
     console.log("----");
     printDate(sessions[i].initDate);
@@ -53,7 +56,7 @@ export const parseSessionsStatistics = (s: Session[]): [string[], number[]] => {
     current2 = new Date(current1.getTime());
   }
 
-  return [labels, data];
+  return [labels, data, title];
 };
 
 function convertToHalf(date: Date) {

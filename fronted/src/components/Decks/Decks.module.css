@@ -15,15 +15,26 @@
 }
 
 .decks .deck {
-  margin-left: 25px;
+  margin-left: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .decks .deck p {
   color: #d4a373;
   font-weight: 600;
+  text-align: center;
   margin-top: 6px;
+}
+
+.vertical {
+  flex-direction: column;
+  width: 180px;
+}
+
+.vertical .deck {
+  margin: 50px 0 0 0;
 }
