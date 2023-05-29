@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { client } from "@/config/axios.config";
 import { loading, showMessage } from "@/utils/alerts";
+import Return from "@/components/Return/Return";
 
 const Flowtime = () => {
   const [time, setTime] = useState(0);
@@ -63,6 +64,7 @@ const Flowtime = () => {
 
   return (
     <AppLayout>
+      <Return />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.help}>

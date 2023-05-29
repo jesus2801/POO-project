@@ -14,7 +14,10 @@ class DecksController {
       if (isEmpty(req.body, ["name", "userId"])) {
         return res.status(500).send({ error: true, message: "Missing required fields" });
       }
-      const user = await decksModel.createDeck(req.body);
+      const user = await decksModel.createDeck({
+        ...req.body,
+        userId: req.body.user.id,
+      });
       res.status(201).send(user);
     } catch (e: any) {
       handleHttp(res, e);
@@ -30,8 +33,7 @@ class DecksController {
 
   public async getDecks(req: Request, res: Response) {
     try {
-      const { userId } = req.params;
-      const user = await decksModel.getUserDecks(userId);
+      const user = await decksModel.getUserDecks(req.body.user.id);
       res.status(200).send(user);
     } catch (e: any) {
       handleHttp(res, e);

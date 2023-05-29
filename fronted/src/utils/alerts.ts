@@ -62,6 +62,7 @@ export function obtainInfo(
       html,
       showCancelButton: true,
       confirmButtonText,
+      cancelButtonText: "Cancelar",
       preConfirm: async () => {
         return new Promise((resolve) => {
           const response: any = {};

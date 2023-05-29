@@ -75,7 +75,7 @@ const TaskComponent: FC<TaskProps> = ({ task, setTasks, tasks }) => {
         {/* @ts-ignore */}
         <ContextMenu id={task.id}>
           {/* @ts-ignore */}
-          <MenuItem onClick={onDelete}>Delete</MenuItem>
+          <MenuItem onClick={onDelete}>Eliminar</MenuItem>
         </ContextMenu>
         <input value={value} onChange={onChangeContent} />
         <FontAwesomeIcon

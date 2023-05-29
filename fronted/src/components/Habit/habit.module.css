@@ -1,0 +1,53 @@
+.habit {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  border: 2px solid #a97847;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.habit .titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit .titles p:nth-child(1) {
+  color: #d4a373;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.habit .titles p:nth-child(2) {
+  margin-top: 10px;
+  color: #a97847;
+  font-weight: 500;
+  border-bottom: 2px solid #a97847;
+  padding: 0 10px 3px;
+}
+
+.habit .day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit .day p {
+  color: #a97847;
+  font-weight: 600;
+}
+
+.habit .day div {
+  width: 18px;
+  height: 18px;
+  border-radius: 100px;
+  border: 2px solid #a97847;
+  margin-top: 10px;
+  cursor: pointer;
+}

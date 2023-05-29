@@ -9,7 +9,7 @@ import { isEmpty } from "../utils/validation.utils";
  * @description this class is the controller for the cards route
  */
 class CardController {
-  public async GetDeck(req: Request, res: Response) {
+  public async GetDeckCards(req: Request, res: Response) {
     try {
       const { iDDeck } = req.params;
       const DeckCards = await cardsModel.getDeckCards(iDDeck);
@@ -30,7 +30,11 @@ class CardController {
       if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
         return res.status(400).send({ error: true, message: "Missing required fields" });
       }
-      const Card = await cardsModel.createCard(req.body);
+      
+      const Card = await cardsModel.createCard({
+        ...req.body,
+        userId: req.body.user.id,
+      });
       res.status(201).json(Card);
     } catch (e: any) {
       console.log(typeof Object.prototype.toString.call(res));
