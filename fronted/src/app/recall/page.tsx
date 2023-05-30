@@ -138,7 +138,7 @@ const ActiveRecall = () => {
             </>
           ) : (
             <Image
-              src="/decks/tumbleweed.png"
+              src="/decks/tumbleweed.svg"
               width={450}
               height={450}
               alt="tumbleweed"

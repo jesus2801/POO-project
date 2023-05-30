@@ -144,12 +144,12 @@ const Home: NextPage = () => {
         <div className={styles.container}>
           <div className={styles.profile}>
             <Image
-              src="/profile.png"
+              src="/profile.svg"
               width={250}
               height={250}
               alt="Profile picture"
             />
-            <p>@user.login</p>
+            <p>logueado</p>
           </div>
           <p>Total de tareas completadas: {completedTasks}</p>
           <div className={styles.tasks}>

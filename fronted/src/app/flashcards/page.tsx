@@ -74,6 +74,12 @@ const Flashcards = () => {
     }
   }, [selectedDeck]);
 
+  useEffect(()=>{
+    if (reveal) {
+
+    }
+  }, [reveal])  ;
+
   const onNext = async (value: "no" | "yes") => {
     if (!reveal) {
       showMessage(
@@ -82,7 +88,7 @@ const Flashcards = () => {
       );
       return;
     }
-
+    //hola
     loading(true);
     await client.put(`/cards/${allCards[selectedCard!].id}`, {
       ...allCards[selectedCard!],
@@ -123,9 +129,8 @@ const Flashcards = () => {
                   <div>
                     <p>{allCards[selectedCard].front}</p>
                   </div>
-                  <div
+                  <div className={reveal ? "reveal" : ""}
                     onClick={(e) => {
-                      e.currentTarget.classList.add("reveal");
                       setReveal(true);
                     }}
                   >
