@@ -17,7 +17,7 @@ const opt: Intl.DateTimeFormatOptions = {
   year: "numeric",
 };
 
-const habits = () => {
+const Habits = () => {
   const [date, setDate] = useState("");
   const [quote, setQuote] = useState("");
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -96,4 +96,4 @@ const habits = () => {
   );
 };
 
-export default habits;
+export default Habits;

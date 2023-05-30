@@ -11,7 +11,7 @@ import { isEmpty } from "../utils/validation.utils";
 class DecksController {
   public async createDeck(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["name", "userId"])) {
+      if (isEmpty(req.body, ["name"])) {
         return res.status(500).send({ error: true, message: "Missing required fields" });
       }
       const user = await decksModel.createDeck({
@@ -49,7 +49,7 @@ class DecksController {
 
   public async updateDeck(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["name", "userId"])) {
+      if (isEmpty(req.body, ["name"])) {
         return res.status(500).send({ error: true, message: "No exist" });
       }
       const { id } = req.params;

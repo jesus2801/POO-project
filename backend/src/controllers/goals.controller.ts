@@ -28,7 +28,7 @@ class GoalController {
 
   public async CreateGoal(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["userId","description", "title"])) {
+      if (isEmpty(req.body, ["description", "title"])) {
         return res.status(400).send({ error: true, message: "Missing required fields" });
       }
       const goal = await goalsModel.createGoal(req.body);

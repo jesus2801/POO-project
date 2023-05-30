@@ -98,28 +98,28 @@ const Flowtime = () => {
           <div className={styles.presets}>
             <div className={styles.goal} onClick={onGoalClick}>
               <div>
-                <p>20'</p>
+                <p>{"20'"}</p>
               </div>
               <p className={styles.goal_title}>Diverso</p>
             </div>
 
             <div className={styles.goal} onClick={onGoalClick}>
               <div>
-                <p>30'</p>
+                <p>{"30'"}</p>
               </div>
               <p className={styles.goal_title}>Tarea</p>
             </div>
 
             <div className={styles.goal} onClick={onGoalClick}>
               <div>
-                <p>40'</p>
+                <p>{"40'"}</p>
               </div>
               <p className={styles.goal_title}>Estudio</p>
             </div>
 
             <div className={styles.goal} onClick={onGoalClick}>
               <div>
-                <p>50'</p>
+                <p>{"50'"}</p>
               </div>
               <p className={styles.goal_title}>Trabajo</p>
             </div>

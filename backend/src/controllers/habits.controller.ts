@@ -32,7 +32,7 @@ class HabitController {
      */
   public async CreateHabit(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ['name', 'userId'])) {
+      if (isEmpty(req.body, ['name'])) {
           return res.status(400).send({ error: true, message: 'Missing required fields' });
       }
       const habit = await habitsModel.createhabit({
@@ -53,7 +53,7 @@ class HabitController {
      */
   public async UpdateHabit(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ['name', 'userId'])) {
+      if (isEmpty(req.body, ['fullfilled'])) {
            return res.status(400).send({ error: true, message: 'Missing required fields' });
       }
       const { id } = req.params;

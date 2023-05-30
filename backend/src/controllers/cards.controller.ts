@@ -27,7 +27,7 @@ class CardController {
    */
   public async CreateCard(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
+      if (isEmpty(req.body,[ "deckId","front", "back" ])) {
         return res.status(400).send({ error: true, message: "Missing required fields" });
       }
       
@@ -50,7 +50,7 @@ class CardController {
    */
   public async UpdateCard(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["userId", "deckId","front", "back" ])) {
+      if (isEmpty(req.body, [ "deckId","front", "back" ])) {
         return res.status(500).send({ error: true, message: "No existe" });
       }
       const { IdCard } = req.params;

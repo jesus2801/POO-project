@@ -18,7 +18,7 @@ class TasksController {
    */
   public async createTask(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["userId", "content", "category", "date"])) {
+      if (isEmpty(req.body, [ "content", "category", "date"])) {
         return res.status(500).send({ error: true, message: "Missing required fields" });
       }
       const user = await tasksModel.createTask({
@@ -56,7 +56,7 @@ class TasksController {
 
   public async updateTask(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["userId", "content", "category", "date"])) {
+      if (isEmpty(req.body, ["content", "category", "date"])) {
         return res.status(500).send({ error: true, message: "Missing required fields" });
       }
       const { id } = req.params;

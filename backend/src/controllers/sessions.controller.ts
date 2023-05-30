@@ -14,12 +14,14 @@ class SessionsController {
    * @param {Request} req
    * @param {Response} res
    * @returns {Promise<void>}
-   * 
+   *
    */
   public async createSession(req: Request, res: Response) {
     try {
-      if (isEmpty(req.body, ["userId", "initDate", "endDate"] )) {
-        return res.status(400).send({ error: true, message: "Missing required fields" });
+      if (isEmpty(req.body, ["initDate", "endDate"])) {
+        return res
+          .status(400)
+          .send({ error: true, message: "Missing required fields" });
       }
       const session = await sessionsModel.createSession({
         ...req.body,
@@ -36,8 +38,8 @@ class SessionsController {
    * @param {Request} req
    * @param {Response} res
    * @returns {Promise<void>}
-   * 
-     */
+   *
+   */
   public async getUserSessions(req: Request, res: Response) {
     try {
       const sessions = await sessionsModel.getUserSessions(req.body.user.id);
@@ -52,7 +54,6 @@ class SessionsController {
    * @param {Response} res
    * @returns {Promise<void>}
    */
-
 
   public async deleteSession(req: Request, res: Response) {
     try {

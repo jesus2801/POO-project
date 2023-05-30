@@ -44,25 +44,31 @@ const Flashcards = () => {
         deckId: selectedDeck!.id,
       });
 
-      updateCards();
+      const response = await client.get(`/cards/${selectedDeck!.id}`);
+      const cs = response.data.filter((c: any) => c.fibonacci == 0);
+      setAllCards(cs);
+      if (cs.length > 0) {
+        setSelectedCard(0);
+      } else {
+        setSelectedCard(null);
+      }
       showMessage("carta agregada correctamente", "success");
     } catch (e) {
       console.log(e);
     }
   };
 
-  const updateCards = async () => {
-    const response = await client.get(`/cards/${selectedDeck!.id}`);
-    const cs = response.data.filter((c: any) => c.fibonacci == 0);
-    setAllCards(cs);
-    if (cs.length > 0) {
-      setSelectedCard(0);
-    } else {
-      setSelectedCard(null);
-    }
-  };
-
   useEffect(() => {
+    const updateCards = async () => {
+      const response = await client.get(`/cards/${selectedDeck!.id}`);
+      const cs = response.data.filter((c: any) => c.fibonacci == 0);
+      setAllCards(cs);
+      if (cs.length > 0) {
+        setSelectedCard(0);
+      } else {
+        setSelectedCard(null);
+      }
+    };
     if (selectedDeck) {
       updateCards();
     }
