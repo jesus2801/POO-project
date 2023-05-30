@@ -1,0 +1,70 @@
+.main {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  background-color: #faedcd;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+}
+
+.title {
+  font-weight: 600;
+  color: #a97847;
+  font-size: 50px;
+}
+
+.noDeck {
+  color: #081324;
+  font-style: italic;
+}
+
+.card {
+  width: 700px;
+  height: 400px;
+  background-color: #faedcd;
+  border-radius: 80px;
+  padding: 40px;
+}
+
+.card textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  resize: none;
+  color: #a97847;
+  font-size: 15px;
+}
+
+.terminar {
+  background-color: #faedcd;
+  color: #a97847;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 8px 15px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.response {
+  color: #a97847;
+}
+
+.response:nth-child(1) {
+  margin-bottom: 30px;
+}

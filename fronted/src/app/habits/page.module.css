@@ -1,0 +1,72 @@
+.main {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  background-color: #faedcd;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+}
+
+.container img {
+  position: absolute;
+  right: 22vw;
+  top: 68px;
+  cursor: pointer;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #fff;
+  margin-top: 30px;
+  border-radius: 100px;
+  padding: 20px 25px;
+  color: #a97847;
+  font-weight: 500;
+}
+
+.header {
+  width: 50%;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a97847;
+  font-weight: 600;
+  font-size: 40px;
+  background-color: #faedcd;
+  border-radius: 20px;
+}
+
+.habits {
+  width: 80%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+  max-height: 550px;
+}
+
+.habits .habit {
+  width: 100%;
+  border: 2px solid #a97847;
+}

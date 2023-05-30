@@ -1,0 +1,129 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  width: 8px; /* Tamaño del scroll en vertical */
+  height: 8px; /* Tamaño del scroll en horizontal */
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+*::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+*::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+*::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+*::-webkit-scrollbar-track:hover,
+*::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+/*from darkest to lightest*/
+:root {
+  --green0: #A4B274;
+  --green1: #b9c691;
+  --green2: #ccd5ae;
+  --green3: #e9edc9;
+  --yellow1: #eedfb9;
+  --yellow2: #faedcd;
+  --yellow3: #fefae0;
+  --brown1: #a97847;
+  --brown2: #d4a373;
+  --red1: #eab0b0;
+  --red2: #edc9c9;
+  --purple1: #c3ace0;
+  --purple2: #d9c9ed;
+  --blue1: #ade0dd;
+  --blue2: #c9edeb;
+}
+
+.react-contextmenu {
+  background-color: #fff;
+  width: 150px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(199, 199, 199, 1);
+  -moz-box-shadow: 1px 1px 4px 0px rgba(199, 199, 199, 1);
+  box-shadow: 1px 1px 4px 0px rgba(199, 199, 199, 1);
+}
+
+.react-contextmenu-item {
+  padding: 10px 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  transition: 200ms ease background-color;
+}
+
+.react-contextmenu-item:hover {
+  background-color: #f8f8f8;
+}
+
+.swal2-html-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: auto;
+  max-width: 328px;
+  padding-left: 120px;
+  margin-top: 10px;
+}
+
+.form-date__label {
+  font-size: 14px;
+  line-height: 24px;
+  padding-bottom: 2px;
+}
+
+.form-date__input[type="date"] {
+  appearance: none;
+  color: #1d1d1d;
+  font-size: 18px;
+  border: 1px solid #ecf0f1;
+  background: #ecf0f1;
+  padding: 4px;
+  display: inline-block;
+  visibility: visible;
+  width: 100%;
+}
+.form-date__input[type="date"]:focus {
+  color: #495057;
+  background-color: #ffffff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
