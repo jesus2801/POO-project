@@ -4,7 +4,7 @@ This application, called "GoalKeeper", aims to help students improve their produ
 
 ## Thecnologies.
 
-The entire project was written with Javascript-based technologies. The frontend used NextJS and the backend was made with NodeJS, both the backend and frontend have unit tests for checking the functionalities of the application.
+The entire project was written with Javascript-based technologies. The frontend used NextJS and the backend was made with NodeJS with CSV as the database (a requirement for the assignment), both the backend and frontend have unit tests for checking the functionalities of the application.
 
 ## Authors
 
